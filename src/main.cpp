@@ -22,7 +22,6 @@
 #include "vex.h"
 #include "drawing.h"
 #include "autonomous.h"
-#include "graphics.h"
 #include <map>
 
 using namespace vex;
@@ -66,9 +65,6 @@ void stopDrive() {
 
 drawing::Button* Right;
 drawing::Button* Left;
-
-graphics::Point* p1;
-graphics::Point* p2;
 
 void RightButton() {
   Controller1.Screen.clearScreen();
@@ -163,15 +159,10 @@ void pre_auton(void) {
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
   Vision17.setLedMode(vision::ledMode::manual);
-  p1 = new graphics::Point(1,1,0);
-  p2 = new graphics::Point(1,1,20);
-
-  p1->drawPoint(90);
-  p2->drawPoint(90);
 
   //autonomous selection
-  //Right = new drawing::Button(maxWidth/2, 0, maxWidth, maxHeight, LeftButton, "Right (8 Pointer)", color(0,0,255));
-  //Left = new drawing::Button(0,0, maxWidth/2, maxHeight, RightButton, "Left (8 Pointer)", color(255,0,0));
+  Right = new drawing::Button(maxWidth/2, 0, maxWidth, maxHeight, LeftButton, "Right (8 Pointer)", color(0,0,255));
+  Left = new drawing::Button(0,0, maxWidth/2, maxHeight, RightButton, "Left (8 Pointer)", color(255,0,0));
 
 }
 
