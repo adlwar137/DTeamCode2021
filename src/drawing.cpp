@@ -40,7 +40,6 @@ void drawing::Button::press() {
   int xp = Brain.Screen.xPosition();
   int yp = Brain.Screen.yPosition();
   for(drawing::Button *button : drawing::Button::globalButtons) {
-    button->x;
     //check if within x boundry
     if (xp > button->x && xp < button->width) {
       //check if within y boundry

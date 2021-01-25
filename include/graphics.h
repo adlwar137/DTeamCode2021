@@ -43,6 +43,14 @@ namespace graphics {
       Point getP1();
       Point getP2();
       //Setters
+      void setX(int x);
+      void setY(int y);
+      void setZ(int z);
+      void setX1(int x1);
+      void setY1(int y1);
+      void setZ1(int z1);
+      void setP1(Point p1);
+      void setP2(Point p2);
     private:
       Point p1;
       Point p2;

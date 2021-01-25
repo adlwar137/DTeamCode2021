@@ -69,6 +69,34 @@ int graphics::Line::getZ1() {
   return this->p2.getZ();
 }
 //Setters
+void graphics::Line::setX(int x) {
+  this->p1.setX(x);
+}
+void graphics::Line::setY(int y) {
+  this->p1.setY(y);
+}
+void graphics::Line::setZ(int z) {
+  this->p1.setZ(z);
+}
+void graphics::Line::setX1(int x1) {
+  this->p2.setX(x1);
+}
+void graphics::Line::setY1(int y1) {
+  this->p2.setY(y1);
+}
+void graphics::Line::setZ1(int z1) {
+  this->p2.setZ(z1);
+}
+void graphics::Line::setP1(Point p1) {
+  this->p1 = p1;
+}
+void graphics::Line::setP2(Point p2) {
+  this->p2 = p2;
+}
+//Render
+void graphics::Line::draw(double fov) {
+  Brain.Screen.drawLine(this->p1.GetProjectedX(fov), this->p1.GetProjectedY(fov), this->p2.GetProjectedX(fov), this->p2.GetProjectedY(fov));
+}
 
 //Rectangle
 graphics::Rectangle::Rectangle(int x, int y, int z, int width, int height) {
