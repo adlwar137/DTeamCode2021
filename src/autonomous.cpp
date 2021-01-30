@@ -1,40 +1,40 @@
 #include "vex.h"
 #include "autonomous.h"
+#include <cmath>
 
-double turnAmount = 1.65;
+double turnAmount = 1.50;
 
+//do something else with this
 void Auton::setup() {
   Auton::rollerTrain(2, reverse);
   Drivetrain.driveFor(reverse, 5, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
   Drivetrain.driveFor(forward, 5, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
 }
 
-void Auton::turnToHeading(double target, double accuracy) {
-  double Kp = 0.01;
-  double Ki = 0.05;
-  double Kd = 0.025;
-
-  double error = 0;
-  double lastError = 0;
-
-  double integral = 0;
-  double derivative = 0;
+void Auton::turnToHeading(int target, int accuracy, int min, int max) {
+  double diff = 10000000; //big number
+  int d; 
 
   double power = 0;
 
-  while(!(Drivetrain.heading() >= target + accuracy && Drivetrain.heading() <= target + accuracy)) {
-    error = target - Drivetrain.heading();
-    integral = integral + error;
-    derivative = error - lastError;
+  while(diff > accuracy) {
+    
+    d = abs(target - Drivetrain.heading()) % 360;
+    diff = d > 180 ? 360 - d : d;
 
-    power = (error * Kp) + (integral * Ki) + (derivative * Kd);
+    power = diff / 180 * max + min;
 
-    if(Drivetrain.heading() > target) {
+    //clamp power
+    if(power > max) {
+      power = max;
+    }
+
+    if(diff - target > 0) {
       //if need to turn left
       rightMotorA.spin(forward, power, percentUnits::pct);
       rightMotorB.spin(forward, power, percentUnits::pct);
-      leftMotorA.spin(forward, power, percentUnits::pct);
-      leftMotorB.spin(forward, power, percentUnits::pct);
+      leftMotorA.spin(reverse, power, percentUnits::pct);
+      leftMotorB.spin(reverse, power, percentUnits::pct);
     } else {
       //if need to turn right
       rightMotorA.spin(reverse, power, percentUnits::pct);
@@ -42,8 +42,6 @@ void Auton::turnToHeading(double target, double accuracy) {
       leftMotorA.spin(forward, power, percentUnits::pct);
       leftMotorB.spin(forward, power, percentUnits::pct);
     }
-
-    lastError = error;
   }
   Drivetrain.stop();
 }

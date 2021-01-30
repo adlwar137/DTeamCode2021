@@ -15,9 +15,9 @@ vision Vision17 = vision (PORT16, 50, Vision17__BLU, Vision17__R3D);
 /*vex-vision-config:end*/
 controller Controller1 = controller(primary);
 motor TrainT = motor(PORT5, ratio18_1, false);
-motor TrainB = motor(PORT6, ratio18_1, false);
-motor IntakeR = motor(PORT11, ratio18_1, false);
-motor IntakeL = motor(PORT12, ratio18_1, true);
+motor TrainB = motor(PORT6, ratio18_1, true);
+motor IntakeR = motor(PORT11, ratio18_1, true);
+motor IntakeL = motor(PORT12, ratio18_1, false);
 motor leftMotorA = motor(PORT2, ratio18_1, false);
 motor leftMotorB = motor(PORT4, ratio18_1, false);
 motor_group LeftDriveSmart = motor_group(leftMotorA, leftMotorB);
