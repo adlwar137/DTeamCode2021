@@ -29,7 +29,7 @@ void Auton::turnToHeading(int target, int accuracy, int min, int max) {
       power = max;
     }
 
-    if(diff - target > 0) {
+    if(target - diff < 0) {
       //if need to turn left
       rightMotorA.spin(forward, power, percentUnits::pct);
       rightMotorB.spin(forward, power, percentUnits::pct);
