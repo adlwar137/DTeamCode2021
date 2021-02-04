@@ -1,6 +1,9 @@
 #include "graphics.h"
 //Point
 //Constructor
+
+std::vector<graphics::Element*> graphics::Display::Elements;
+
 graphics::Point::Point(int x, int y, int z) {
   this->x = x;
   this->y = y;

@@ -1,11 +1,20 @@
 #include "vex.h"
+#include <vector>
 
 //this is meant to be a complete rewrite of drawing from the ground up
 //for the sins i am about to commit please forgive me Bjarne Stroustrup
 
-//TODO line class
+const int BRAIN_WIDTH = 480;
+const int BRAIN_HEIGHT = 240;
+
+
 
 namespace graphics {
+  //superclass for basically everything
+  class Element {
+    
+  };
+
   class Point {
     public:
       Point(int x = 0, int y = 0, int z = 0); //constructor
@@ -68,4 +77,13 @@ namespace graphics {
     private:
       Point points[4];
   };
+
+  class Display {
+    public:
+      void addElement();
+      void removeElement();
+    private:
+      static std::vector<Element*> Elements;
+  };
+
 }
