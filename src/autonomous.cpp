@@ -29,19 +29,21 @@ void Auton::turnToHeading(int target, int accuracy, int min, int max) {
       power = max;
     }
 
-    if(target - diff < 0) {
-      //if need to turn left
-      rightMotorA.spin(forward, power, percentUnits::pct);
-      rightMotorB.spin(forward, power, percentUnits::pct);
-      leftMotorA.spin(reverse, power, percentUnits::pct);
-      leftMotorB.spin(reverse, power, percentUnits::pct);
-    } else {
+    if((target - Drivetrain.heading() >= 0 && target - Drivetrain.heading() <= 180) || (target - Drivetrain.heading() <=-180 && target - Drivetrain.heading() >= -360)) {
       //if need to turn right
       rightMotorA.spin(reverse, power, percentUnits::pct);
       rightMotorB.spin(reverse, power, percentUnits::pct);
       leftMotorA.spin(forward, power, percentUnits::pct);
       leftMotorB.spin(forward, power, percentUnits::pct);
+    } else {
+      //if need to turn left
+      rightMotorA.spin(forward, power, percentUnits::pct);
+      rightMotorB.spin(forward, power, percentUnits::pct);
+      leftMotorA.spin(reverse, power, percentUnits::pct);
+      leftMotorB.spin(reverse, power, percentUnits::pct);
+      
     }
+    wait(20, timeUnits::msec);
   }
   Drivetrain.stop();
 }
