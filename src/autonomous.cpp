@@ -39,6 +39,133 @@ void Auton::turnToHeading(int target, int accuracy, int min, int max) {
   Drivetrain.stop();
 }
 
+void turnToHeadingPID(int target) {
+  //TODO tune this
+  const double Kp = 1;
+  const double Ki = 0;
+  const double Kd = 0;
+
+  int d;
+  int speed;
+  double previousError;
+
+  double error = 361;
+  double integral;
+  double derivative;
+
+  while(error > 1) {
+    d = abs(target - Drivetrain.heading()) % 360;
+    error = d > 180 ? 360 - d : d;
+
+    integral = integral + error;
+
+    if (error < 1) {
+      integral = 0;
+    }
+
+    /*
+    if (abs(error) > 100) {
+      integral = 0;
+    }
+    */
+    derivative = error - previousError;
+    previousError = error;
+
+    speed = Kp*error + Ki*integral + Kd*derivative;;
+    
+
+    if((target - Drivetrain.heading() >= 0 && target - Drivetrain.heading() <= 180) || (target - Drivetrain.heading() <=-180 && target - Drivetrain.heading() >= -360)) {
+      //if need to turn right
+      rightMotorA.spin(reverse, speed, percentUnits::pct);
+      rightMotorB.spin(reverse, speed, percentUnits::pct);
+      leftMotorA.spin(forward, speed, percentUnits::pct);
+      leftMotorB.spin(forward, speed, percentUnits::pct);
+    } else {
+      //if need to turn left
+      rightMotorA.spin(forward, speed, percentUnits::pct);
+      rightMotorB.spin(forward, speed, percentUnits::pct);
+      leftMotorA.spin(reverse, speed, percentUnits::pct);
+      leftMotorB.spin(reverse, speed, percentUnits::pct);
+      
+    }
+    wait(20, timeUnits::msec);
+  }
+  Drivetrain.stop();
+}
+
+void Auton::turnByPID(int target) {
+  turnToHeadingPID(target + Drivetrain.heading());
+}
+
+void drivePID(double target, vex::rotationUnits rotationUnits) {
+  rightMotorA.resetPosition();
+  rightMotorB.resetPosition();
+  leftMotorA.resetPosition();
+  leftMotorB.resetPosition();
+
+  //TODO tune this
+  const double Kp = 1;
+  const double Ki = 0;
+  const double Kd = 0;
+
+  int speed;
+  double previousError;
+
+  double error = 361;
+  double integral;
+  double derivative;
+
+  while(error > 1) {
+    error = target - (
+      rightMotorA.position(rotationUnits) +
+      rightMotorB.position(rotationUnits) +
+      leftMotorA.position(rotationUnits) +
+      leftMotorB.position(rotationUnits)
+    ) / 4;
+
+    integral = integral + error;
+
+    if (error < 1) {
+      integral = 0;
+    }
+
+    /*
+    if (abs(error) > 100) {
+      integral = 0;
+    }
+    */
+    derivative = error - previousError;
+    previousError = error;
+
+    speed = Kp*error + Ki*integral + Kd*derivative;;
+    
+    rightMotorA.spin(forward, speed, percentUnits::pct);
+    rightMotorB.spin(forward, speed, percentUnits::pct);
+    leftMotorA.spin(forward, speed, percentUnits::pct);
+    leftMotorB.spin(forward, speed, percentUnits::pct);
+
+    wait(20, timeUnits::msec);
+  }
+  Drivetrain.stop();
+}
+
+void drivePID(double target, vex::distanceUnits distance) {
+  double amount;
+  //convert distance to revolutions
+  switch(distance){
+    case vex::distanceUnits::cm:
+    amount = target / (2 * M_PI * 3.81);
+    break;
+    case vex::distanceUnits::in:
+    amount = target / (2 * M_PI * 1.5);
+    break;
+    case vex::distanceUnits::mm:
+    amount = target / (2 * M_PI * 38.1);
+    break;
+  }
+  drivePID(amount, vex::rotationUnits::rev);
+}
+
 void Auton::driveForTime(double time, vex::directionType direction, vex::timeUnits timeUnits, double speed, vex::velocityUnits velocityUnits) {
   rightMotorA.spin(direction, speed, velocityUnits);
   rightMotorB.spin(direction, speed, velocityUnits);
