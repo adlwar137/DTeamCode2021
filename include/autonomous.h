@@ -1,10 +1,8 @@
 namespace Auton { 
-    //release the hood and move ball down to prepare for scoring.
-    void setup();
 
     void turnToHeading(int target, int accuracy, int min, int max);
 
-    void turnBy(double ammount, double accuracy, int min, int max);
+    //turn using a pid loop (takes degrees based on absolute Heading)
 
     //my own drivetrain code for driving for a time because there's none currently (overrides below)
     void driveForTime(double time, vex::directionType direction = vex::directionType::fwd, vex::timeUnits timeUnits = vex::timeUnits::sec, double speed = 100, vex::velocityUnits velocityUnits = vex::velocityUnits::pct);
@@ -30,8 +28,6 @@ namespace Auton {
     void intakeOff();
 
     void intakeForTime(double time, vex::directionType direction = vex::directionType::fwd, vex::timeUnits timeUnits = vex::timeUnits::sec, double speed = 100, vex::velocityUnits velocityUnits = vex::velocityUnits::pct);
-
-    void rotate(double amount, vex::rotationUnits rotationUnits = vex::rotationUnits::deg, vex::turnType turnType = vex::turnType::right, double speed = 100, vex::velocityUnits velocityUnits = vex::velocityUnits::pct);
 }
 
 

@@ -2,15 +2,6 @@
 #include "autonomous.h"
 #include <cmath>
 
-double turnAmount = 1.50;
-
-//do something else with this
-void Auton::setup() {
-  Auton::rollerTrain(2, reverse);
-  Drivetrain.driveFor(reverse, 5, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
-  Drivetrain.driveFor(forward, 5, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
-}
-
 void Auton::turnToHeading(int target, int accuracy, int min, int max) {
   double diff = 10000000; //big number
   int d; 
@@ -103,18 +94,4 @@ void Auton::intakeForTime(double time, vex::directionType direction, vex::timeUn
   IntakeR.spinFor(direction, time, timeUnits, speed, velocityUnits);
   IntakeL.stop();
   IntakeR.stop();
-}
-
-void Auton::rotate(double amount, vex::rotationUnits rotationUnits, vex::turnType turnType, double speed, vex::velocityUnits velocityUnits) {
-  if(turnType == vex::turnType::right) {
-    rightMotorA.startRotateFor(reverse, amount * turnAmount, rotationUnits, speed, velocityUnits);
-    rightMotorB.startRotateFor(reverse, amount * turnAmount, rotationUnits, speed, velocityUnits);
-    leftMotorA.startRotateFor(forward, amount * turnAmount, rotationUnits, speed, velocityUnits);
-    leftMotorB.rotateFor(forward, amount * turnAmount, rotationUnits, speed, velocityUnits);
-  } else {
-    rightMotorA.startRotateFor(forward, amount * turnAmount, rotationUnits, speed, velocityUnits);
-    rightMotorB.startRotateFor(forward, amount * turnAmount, rotationUnits, speed, velocityUnits);
-    leftMotorA.startRotateFor(reverse, amount * turnAmount, rotationUnits, speed, velocityUnits);
-    leftMotorB.rotateFor(reverse, amount * turnAmount, rotationUnits, speed, velocityUnits);
-  }
 }
