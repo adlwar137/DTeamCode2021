@@ -175,25 +175,13 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-  //1 pointer below
-/*
-  Auton::rollerTrain(1, reverse);
-
-  Auton::driveForTime(2, forward, seconds, 50, vex::velocityUnits::pct);
-  
-  Auton::rollerTrain(10, forward);
-
-  Auton::driveForTime(1, reverse, seconds, 20, velocityUnits::pct);
-
-  Auton::setAllBrake(brakeType::coast);
-*/
-//Match Right
+//Skills Right
 
   Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
 
   Drivetrain.driveFor(reverse, 15, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
 
-  Auton::turnToHeading(90, 1, 1, 10);
+  Auton::turnToHeading(-90, 1, 1, 10);
 
   Drivetrain.driveFor(forward, 40, vex::distanceUnits::cm, 25, velocityUnits::pct);
 
@@ -201,39 +189,85 @@ void autonomous(void) {
   
   Auton::driveForTime(2, forward, seconds, 15, vex::velocityUnits::pct);
 
-  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+  Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
 
   Auton::intakeOff();
 
-  Auton::turnToHeading(45, 1, 1, 25);
+  Auton::turnToHeading(-45, 1, 1, 25);
 
-  Drivetrain.driveFor(forward, 30, distanceUnits::cm);
+  Auton::driveForTime(3, forward, seconds, 10, velocityUnits::pct);
 
   Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
 
-  Drivetrain.driveFor(reverse, 15, distanceUnits::cm);
+  Drivetrain.driveFor(reverse, 15, distanceUnits::cm, 10, vex::velocityUnits::pct);
 
-  Auton::turnToHeading(180, 1, 1, 15);
+//  Auton::turnToHeading(180, 1, 1, 15);
 
-  Drivetrain.driveFor(forward, 70, distanceUnits::cm);
+//  Drivetrain.driveFor(forward, 70, distanceUnits::cm, 10, vex::velocityUnits::pct);
 
-/*
+  //Match Right
+  /*
+  Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
+  Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+  Auton::turnToHeading(270, 1, 1, 25);
+  Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+  Auton::turnToHeading(315, 1, 1, 25);
+  Auton::intakeOn();
+  Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
+  Auton::intakeOff();
+  Auton::rollerTrainForTime(2);
+  Auton::intakeOn(reverse);
+  Drivetrain.driveFor(reverse, 10, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+  Auton::intakeOff;
+  */
+  //Match Left
+  /*
+  Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
+  Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
+  Auton::turnToHeading(90, 1, 1, 25);
+  Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
+  Auton::turnToHeading(45, 1, 1, 25);
+  Auton::intakeOn();
+  Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
+  Auton::intakeOff();
+  Auton::rollerTrainForTime(2);
+  Auton::intakeOn(reverse);
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+  Auton::intakeOff();
+  */
+  //Match Center
+  /*
   Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
 
   Drivetrain.driveFor(reverse, 10, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
 
-  Auton::turnToHeading(180, 1, 1, 10);
+  Auton::turnToHeading(90, 1, 1, 25);
+
+  Auton::turnToHeading(180, 1, 1, 25);
+
+  wait(1, sec);
 
   Auton::intakeOn();
 
-  Drivetrain.driveFor(forward, 40, distanceUnits::cm, 10, velocityUnits::pct);
+  Auton::driveForTime(4, forward, seconds, 10, velocityUnits::pct);
+  //Drivetrain.driveFor(forward, 20, vex::distanceUnits::cm, 10, velocityUnits::pct);
 
   Auton::intakeOff();
-*/
-//wait(2, sec);
 
-//Auton::turnToHeading(90, 1, 15, 1);
+  Auton::rollerTrainForTime(2);
 
+  Drivetrain.driveFor(reverse, 10, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+  */
+  //Match Corner
+  /*
+  Auton::intakeOn();
+  Auton::driveForTime(1, forward, seconds, 50, velocityUnits::pct);
+  Auton::intakeOff();
+  Auton::rollerTrainForTime(2);
+  Auton::intakeOn(reverse);
+  Auton::driveForTime(1, reverse, seconds, 50, velocityUnits::pct);
+  Auton::intakeOff();
+  */
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
@@ -259,11 +293,11 @@ void autonomous(void) {
 
       Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 25, vex::velocityUnits::pct);
 
-      Auton::rotate(90, deg, left, 10, vex::velocityUnits::pct);
+      //Auton::rotate(90, deg, left, 10, vex::velocityUnits::pct);
 
       Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 25, velocityUnits::pct);
 
-      Auton::rotate(45, deg, right,  25, vex::velocityUnits::pct);
+     // Auton::rotate(45, deg, right,  25, vex::velocityUnits::pct);
 
       Auton::intakeOn();
       
@@ -290,11 +324,11 @@ void autonomous(void) {
 
       Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 25, vex::velocityUnits::pct);
 
-      Auton::rotate(-75, deg, left, 10, vex::velocityUnits::pct);
+   //   Auton::rotate(-75, deg, left, 10, vex::velocityUnits::pct);
 
       Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 25, velocityUnits::pct);
 
-      Auton::rotate(-55, deg, right,  25, vex::velocityUnits::pct);
+    //  Auton::rotate(-55, deg, right,  25, vex::velocityUnits::pct);
 
       Auton::intakeOn();
       
