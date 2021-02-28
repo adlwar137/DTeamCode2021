@@ -39,11 +39,11 @@ void Auton::turnToHeading(int target, int accuracy, int min, int max) {
   Drivetrain.stop();
 }
 
-void turnToHeadingPID(int target) {
+void Auton::turnToHeadingPID(int target) {
   //TODO tune this
-  const double Kp = 1;
-  const double Ki = 0;
-  const double Kd = 0;
+  const double Kp = 0.25;
+  const double Ki = 0.00002;
+  const double Kd = 0.21;
 
   int d;
   int speed;
@@ -53,9 +53,13 @@ void turnToHeadingPID(int target) {
   double integral;
   double derivative;
 
-  while(error > 1) {
+  while(error != 0) {
     d = abs(target - Drivetrain.heading()) % 360;
     error = d > 180 ? 360 - d : d;
+
+    Controller1.Screen.clearScreen();
+    Controller1.Screen.setCursor(1, 1);
+    Controller1.Screen.print(error);
 
     integral = integral + error;
 
@@ -97,7 +101,7 @@ void Auton::turnByPID(int target) {
   turnToHeadingPID(target + Drivetrain.heading());
 }
 
-void drivePID(double target, vex::rotationUnits rotationUnits) {
+void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   rightMotorA.resetPosition();
   rightMotorB.resetPosition();
   leftMotorA.resetPosition();
@@ -149,7 +153,7 @@ void drivePID(double target, vex::rotationUnits rotationUnits) {
   Drivetrain.stop();
 }
 
-void drivePID(double target, vex::distanceUnits distance) {
+void Auton::drivePID(double target, vex::distanceUnits distance) {
   double amount;
   //convert distance to revolutions
   switch(distance){
