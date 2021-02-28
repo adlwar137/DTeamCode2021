@@ -23,6 +23,9 @@ extern motor leftMotorA;
 extern motor leftMotorB;
 extern motor rightMotorA;
 extern motor rightMotorB;
+extern led Green;
+extern led Yellow;
+extern led Red;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

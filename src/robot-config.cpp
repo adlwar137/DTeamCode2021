@@ -26,6 +26,9 @@ motor rightMotorB = motor(PORT3, ratio18_1, true);
 motor_group RightDriveSmart = motor_group(rightMotorA, rightMotorB);
 inertial TurnGyroSmart = inertial(PORT18);
 smartdrive Drivetrain = smartdrive(LeftDriveSmart, RightDriveSmart, TurnGyroSmart, 319.19, 320, 40, mm, 1);
+led Green = led(Brain.ThreeWirePort.A);
+led Yellow = led(Brain.ThreeWirePort.B);
+led Red = led(Brain.ThreeWirePort.C);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

@@ -389,6 +389,19 @@ void usercontrol(void) {
     // ........................................................................
     //movement
 
+    if(Brain.Battery.capacity() > 75) {
+      Green.on();
+      Yellow.off();
+      Red.off();
+    } else if(Brain.Battery.capacity() > 50 && Brain.Battery.capacity() < 75) {
+      Green.off();
+      Yellow.on();
+      Red.off();
+    } else {
+      Green.off();
+      Yellow.off();
+      Red.off();
+    }
     
     if (tank == true) {
       leftMotorA.spin(forward, Controller1.Axis3.value(), pct);
