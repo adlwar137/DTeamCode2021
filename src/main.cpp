@@ -283,64 +283,10 @@ void autonomous(void) {
 
     case BlueRight:
       Controller1.Screen.print("Blue Right Autonomous");
-
-      //auton goes here
-      Auton::setup();
-
-      Auton::driveForTime(0.5, forward, seconds, 15, vex::velocityUnits::pct);
-
-      Auton::rollerTrainForTime(2, forward, seconds, 100, vex::velocityUnits::pct);
-
-      Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 25, vex::velocityUnits::pct);
-
-      //Auton::rotate(90, deg, left, 10, vex::velocityUnits::pct);
-
-      Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 25, velocityUnits::pct);
-
-     // Auton::rotate(45, deg, right,  25, vex::velocityUnits::pct);
-
-      Auton::intakeOn();
-      
-      Auton::driveForTime(4, forward, seconds, 15, vex::velocityUnits::pct);
-
-      Auton::rollerTrainForTime(0.5);
-
-      Auton::intakeOff();
-
-      Auton::rollerTrainForTime(1.5);
-
-      Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
     break;
 
     case BlueLeft:
       Controller1.Screen.print("Blue Left Autonomous");
-
-      //auton goes here
-      Auton::setup();
-
-      Auton::driveForTime(0.5, forward, seconds, 15, vex::velocityUnits::pct);
-
-      Auton::rollerTrainForTime(2, forward, seconds, 100, vex::velocityUnits::pct);
-
-      Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 25, vex::velocityUnits::pct);
-
-   //   Auton::rotate(-75, deg, left, 10, vex::velocityUnits::pct);
-
-      Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 25, velocityUnits::pct);
-
-    //  Auton::rotate(-55, deg, right,  25, vex::velocityUnits::pct);
-
-      Auton::intakeOn();
-      
-      Auton::driveForTime(4, forward, seconds, 15, vex::velocityUnits::pct);
-
-      Auton::rollerTrainForTime(0.5);
-
-      Auton::intakeOff();
-
-      Auton::rollerTrainForTime(1.5);
-
-      Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
     break;
 
     case RedRight:
