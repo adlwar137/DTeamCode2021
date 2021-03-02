@@ -175,13 +175,17 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
+task::sleep(3000);
+
+//Auton::turnToHeadingPID(90);
+
 //Skills Right
 
   Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
 
   Drivetrain.driveFor(reverse, 15, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
 
-  Auton::turnToHeading(-90, 1, 1, 10);
+  Auton::turnToHeadingPID(-90);
 
   Drivetrain.driveFor(forward, 40, vex::distanceUnits::cm, 25, velocityUnits::pct);
 
@@ -193,7 +197,7 @@ void autonomous(void) {
 
   Auton::intakeOff();
 
-  Auton::turnToHeading(-45, 1, 1, 25);
+  Auton::turnToHeadingPID(-45);
 
   Auton::driveForTime(3, forward, seconds, 10, velocityUnits::pct);
 
