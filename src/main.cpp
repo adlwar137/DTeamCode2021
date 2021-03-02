@@ -185,7 +185,7 @@ task::sleep(3000);
 
   Drivetrain.driveFor(reverse, 15, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
 
-  Auton::turnToHeadingPID(-90);
+  Auton::turnToHeading(-90, 1, 1, 15);
 
   Drivetrain.driveFor(forward, 40, vex::distanceUnits::cm, 25, velocityUnits::pct);
 
@@ -197,7 +197,7 @@ task::sleep(3000);
 
   Auton::intakeOff();
 
-  Auton::turnToHeadingPID(-45);
+  Auton::turnToHeading(-45, 1, 1, 15);
 
   Auton::driveForTime(3, forward, seconds, 10, velocityUnits::pct);
 
