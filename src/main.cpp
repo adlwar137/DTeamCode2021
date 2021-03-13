@@ -472,7 +472,7 @@ void usercontrol(void) {
     } else {
       Green.off();
       Yellow.off();
-      Red.off();
+      Red.on();
     }
     
     if (tank == true) {
