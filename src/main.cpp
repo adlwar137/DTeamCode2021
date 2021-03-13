@@ -175,7 +175,8 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-task::sleep(3000);
+//task::sleep(3000);
+/*
 //score first ball
 Auton::rollerTrainForTime(2, forward, seconds, 100, vex::velocityUnits::pct);
 
