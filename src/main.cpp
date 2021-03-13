@@ -490,7 +490,7 @@ void usercontrol(void) {
     if(Controller1.ButtonR1.pressing()) {
       IntakeR.spin(forward, 100, pct);
       IntakeL.spin(forward, 100, pct);
-      TrainT.spin(forward,100, pct);
+      //TrainT.spin(forward,100, pct);
     } else if(Controller1.ButtonR2.pressing()) {
       IntakeR.spin(reverse, 100, pct);
       IntakeL.spin(reverse, 100, pct);
@@ -503,7 +503,7 @@ void usercontrol(void) {
     if(!Controller1.ButtonR1.pressing() && !Controller1.ButtonR2.pressing() && !Controller1.ButtonLeft.pressing() && !Controller1.ButtonUp.pressing()) {
       IntakeL.stop();
       IntakeR.stop();
-      TrainT.stop();
+      //TrainT.stop();
     }
 
     if(cameraToggle == manual) {
@@ -519,7 +519,7 @@ void usercontrol(void) {
         IntakeL.spin(forward, 100, pct);
         IntakeR.spin(forward, 100, pct);
       } else {
-        //TrainT.stop();
+        TrainT.stop();
         TrainB.stop();
       }
     } else {
