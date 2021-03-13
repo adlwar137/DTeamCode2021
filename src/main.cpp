@@ -179,38 +179,29 @@ void autonomous(void) {
 /*
 //score first ball
 Auton::rollerTrainForTime(2, forward, seconds, 100, vex::velocityUnits::pct);
-
 //back up
 Drivetrain.driveFor(reverse, 6, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
-
-//turn to bal
+//turn to ball
 Auton::turnToHeading(-85, 1, 1, 25); //should be 90 but jack said change to 85
-
 //pick up ball
 Auton::intakeOn();
 Drivetrain.driveFor(forward, 50, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
-
 //turn towards goal
 Auton::turnToHeading(315, 1, 1, 25);
 Auton::intakeOff();
-
 //ram goal :)
 Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
-
 //score ball and descore blue ball
 Auton::intakeOn();
 Auton::rollerTrainForTime(0.5);
 Auton::intakeOff();
 Auton::rollerTrainForTime(1.5);
-
 //back up from goal
 Drivetrain.driveFor(reverse, 30, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
-
 //spit out blue ball and turn towards wall ball
 Auton::intakeOn(reverse);
 Auton::turnToHeading(-90, 1, 1, 15);
 Auton::intakeOff();
-
 //pick up ball
 Auton::intakeOn();
 Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
@@ -223,47 +214,36 @@ Auton::intakeOff();
 Auton::intakeOn();
 Auton::rollerTrainForTime(0.3);
 Auton::intakeOff();
-
 Auton::turnToHeading(180, 1, 1, 15);
-
 //drive towards ball while intaking
 Auton::intakeOn();
 Drivetrain.driveFor(forward, 39, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
 Auton::intakeOff();
-
 //make sure ball is in robot
 Auton::intakeForTime(1);
-
+//Turn towards goal
 Auton::turnToHeading(-90, 1, 1, 15);
-
-Auton::driveForTime(2, forward, seconds, 25, velocityUnits::pct); //ram the goal :)
-
+//ram the goal :)
+Auton::driveForTime(2, forward, seconds, 25, velocityUnits::pct);
 //score one ball
 Auton::rollerTrainForTime(0.5, reverse);
 Auton::rollerTrainForTime(0.5);
 Auton::rollerTrainForTime(0.5, reverse);
-
 //back up from goal
 Drivetrain.driveFor(reverse, 10, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
-
 //Turn in the general direction of the goal
 Auton::turnToHeading(180, 1, 1, 15);
-
 //drive towards goal
 Drivetrain.driveFor(forward, 45, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
-
 //turn towards goal
 Auton::turnToHeading(-135, 1, 1, 15);
-
 //ram goal :)
 Auton::driveForTime(2, forward, seconds, 25, velocityUnits::pct);
-
 //score ball
 Auton::intakeOn();
 Auton::rollerTrainForTime(0.5);
 Auton::intakeOff();
 Auton::rollerTrainForTime(1.5);
-
 //back up
 Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
 
@@ -279,7 +259,6 @@ Auton::intakeOff();
 
 Auton::turnToHeading(135, 1, 1, 15);
 */
-//Auton::turnToHeadingPID(90);
 
 //Skills Right
 /*
