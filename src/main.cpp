@@ -33,7 +33,7 @@ competition Competition;
 
 
 
-bool tank = true;
+bool tank = false;
 
 enum AutonSelect {RedRight, RedLeft, BlueRight, BlueLeft, None};
 
