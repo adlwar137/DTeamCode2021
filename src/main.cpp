@@ -278,7 +278,7 @@ Drivetrain.driveFor(forward, 30, distanceUnits::cm, 20, velocityUnits::pct);
 Auton::intakeOff();
 
 Auton::turnToHeading(135, 1, 1, 15);
-
+*/
 //Auton::turnToHeadingPID(90);
 
 //Skills Right
@@ -332,33 +332,33 @@ Auton::turnToHeading(135, 1, 1, 15);
 //  Drivetrain.driveFor(forward, 70, distanceUnits::cm, 10, vex::velocityUnits::pct);
 
   //Match Right
-/*
+
   Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
   Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
   Auton::turnToHeading(270, 1, 1, 25);
-  Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+  Drivetrain.driveFor(forward, 39, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
   Auton::turnToHeading(315, 1, 1, 25);
   Auton::intakeOn();
   Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
   Auton::intakeOff();
   Auton::rollerTrainForTime(2);
   Auton::intakeOn(reverse);
-  Drivetrain.driveFor(reverse, 10, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 30, vex::velocityUnits::pct);
   Auton::intakeOff();
-*/
+
   //Match Left
   /*
   Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
   Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
   Auton::turnToHeading(90, 1, 1, 25);
-  Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
+  Drivetrain.driveFor(forward, 39, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
   Auton::turnToHeading(45, 1, 1, 25);
   Auton::intakeOn();
   Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
   Auton::intakeOff();
   Auton::rollerTrainForTime(2);
   Auton::intakeOn(reverse);
-  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 30, vex::velocityUnits::pct);
   Auton::intakeOff();
   */
   //Match Center
