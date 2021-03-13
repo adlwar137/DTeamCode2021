@@ -41,9 +41,9 @@ void Auton::turnToHeading(int target, int accuracy, int min, int max) {
 
 void Auton::turnToHeadingPID(int target) {
   //TODO tune this
-  const double Kp = 0.25;
+  const double Kp = 0.3;
   const double Ki = 0.00002;
-  const double Kd = 0.21;
+  const double Kd = 0.25;
 
   int d;
   int speed;
