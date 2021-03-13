@@ -376,7 +376,7 @@ Auton::driveForTime(1, reverse);
   Auton::intakeOff();
   Auton::rollerTrainForTime(2);
   Auton::intakeOn(reverse);
-  Auton::driveForTime(1, reverse, seconds, 50, velocityUnits::pct);
+  Auton::driveForTime(0.5, reverse, seconds, 50, velocityUnits::pct);
   Auton::intakeOff();
   
   // ..........................................................................
