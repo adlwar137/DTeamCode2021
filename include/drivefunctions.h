@@ -1,4 +1,4 @@
-namespace Auton { 
+namespace driveFunc { 
 
     //Wierd P loop amalgamation if the functions below this one work then don't use this one
     void turnToHeading(int target, int accuracy, int min, int max, int interations);

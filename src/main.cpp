@@ -162,6 +162,9 @@ void pre_auton(void) {
   Right = new drawing::Button(maxWidth/2, 0, maxWidth, maxHeight, LeftButton, "Right (8 Pointer)", color(0,0,255));
   Left = new drawing::Button(0,0, maxWidth/2, maxHeight, RightButton, "Left (8 Pointer)", color(255,0,0));
 
+  Red.off();
+  Green.off();
+  Yellow.off();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -175,68 +178,220 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
+
 task::sleep(3000);
+//doesnt work ever
 
 //Auton::turnToHeadingPID(90);
 
+//score first ball
+Auton::rollerTrainForTime(1, forward, seconds, 100, vex::velocityUnits::pct);
+//back up
+Drivetrain.driveFor(reverse, 8, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
+//turn to ball
+Auton::turnToHeadingPID(-85); //should be 90 but jack said change to 85 // best descision to change this ever thank you jack
+//pick up ball
+
+Auton::intakeOn();
+Drivetrain.driveFor(forward, 56, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+//turn towards goal
+Auton::turnToHeadingPID(315);
+Auton::intakeOff();
+
+//ram goal :)
+Auton::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
+//score ball and descore blue ball
+Auton::intakeOn();
+Auton::rollerTrainForTime(0.3);
+Auton::intakeOff();
+Auton::rollerTrainForTime(1.7);
+//back up from goal
+Drivetrain.driveFor(reverse, 40, vex::distanceUnits::in, 20, vex::velocityUnits::pct);  //back up from second goal
+
+//spit out blue ball and turn towards wall ball
+//Auton::intakeForTime(1, reverse);
+Auton::turnToHeadingPID(-90);
+//pick up ball
+Auton::intakeOn();
+Auton::driveForTime(2, forward, seconds, 25, velocityUnits::pct);
+Auton::intakeOff();
+//back up
+Auton::intakeOn();
+Drivetrain.driveFor(reverse, 16, vex::distanceUnits::in, 15, vex::velocityUnits::pct); //back up to line up with 3rd ball 
+Auton::intakeOff();
+
+//prime it for scoring
+Auton::intakeOn();
+Auton::rollerTrainForTime(0.3);
+Auton::intakeOff();
+
+Auton::turnToHeadingPID(180);
+
+
+//drive towards ball while intaking
+//mid goal
+Auton::intakeOn();
+
+Drivetrain.driveFor(forward, 40, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+Auton::intakeOff();
+//make sure ball is in robot
+Auton::intakeForTime(1);
+//Turn towards goal
+Auton::turnToHeadingPID(-90);
+//ram the goal :)
+Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
+//score one ball
+Auton::rollerTrainForTime(0.5, reverse);
+Auton::rollerTrainForTime(0.5);
+Auton::rollerTrainForTime(0.5, reverse);
+//back up from goal
+Drivetrain.driveFor(reverse, 10, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+
+//Turn in the general direction of the goal
+Auton::turnToHeadingPID(180);
+//drive towards goal
+Drivetrain.driveFor(forward, 54, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+//turn towards goal
+Auton::turnToHeadingPID(-135);
+//ram goal :)
+
+Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
+//score ball
+Auton::intakeOn();
+Auton::rollerTrainForTime(0.5);
+Auton::intakeOff();
+Auton::rollerTrainForTime(1);
+//back up
+Drivetrain.driveFor(reverse, 52, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+
+//Auton::intakeForTime(1, reverse);
+
+Auton::turnToHeadingPID(90);
+
+Auton::intakeOn();
+Drivetrain.driveFor(forward, 24, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+
+Auton::turnToHeadingPID(180);
+Auton::intakeOff();
+
+//Auton::intakeOn();
+Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
+Auton::rollerTrainOn();
+Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
+//Auton::rollerTrainOff();
+Auton::intakeOff();
+
+//copy of first stuff
+
+
+//score first ball
+Auton::rollerTrainForTime(1, forward, seconds, 100, vex::velocityUnits::pct);
+//back up
+Drivetrain.driveFor(reverse, 8, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
+//turn to ball
+Auton::turnToHeadingPID(-85); //should be 90 but jack said change to 85 // best descision to change this ever thank you jack
+//pick up ball
+
+Auton::intakeOn();
+Drivetrain.driveFor(forward, 56, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+//turn towards goal
+Auton::turnToHeadingPID(315);
+Auton::intakeOff();
+
+//ram goal :)
+Auton::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
+//score ball and descore blue ball
+Auton::intakeOn();
+Auton::rollerTrainForTime(0.3);
+Auton::intakeOff();
+Auton::rollerTrainForTime(1.7);
+//back up from goal
+Drivetrain.driveFor(reverse, 40, vex::distanceUnits::in, 20, vex::velocityUnits::pct);  //back up from second goal
+
+
+
+
+
 //Skills Right
+/*
+  Auton::rollerTrainForTime(2, forward, seconds, 100, vex::velocityUnits::pct);
 
-  Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
 
-  Drivetrain.driveFor(reverse, 15, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
-
-  Auton::turnToHeadingPID(-90);
-
-  Drivetrain.driveFor(forward, 40, vex::distanceUnits::cm, 25, velocityUnits::pct);
+  Auton::turnToHeading(-45, 1, 1, 25);
 
   Auton::intakeOn();
-  
-  Auton::driveForTime(2, forward, seconds, 15, vex::velocityUnits::pct);
 
-  Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+  Auton::driveForTime(4, forward, seconds, 25);
+
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
 
   Auton::intakeOff();
 
-  Auton::turnToHeadingPID(-45);
+  Drivetrain.setHeading(90, rotationUnits::deg);
 
-  Auton::driveForTime(3, forward, seconds, 10, velocityUnits::pct);
+  Auton::turnToHeading(0, 1, 1, 25);
 
-  Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
+  Drivetrain.driveFor(forward, 43, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
 
-  Drivetrain.driveFor(reverse, 15, distanceUnits::cm, 10, vex::velocityUnits::pct);
+  Auton::turnToHeading(90, 1, 1, 25);
+
+  Auton::intakeOn();
+
+  Auton::driveForTime(2, forward, seconds, 25);
+
+  Auton::intakeOff();
+
+  Auton::rollerTrainForTime(2);
+
+  Auton::intakeOn(reverse);
+
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+
+  Auton::intakeOff();
+
+  Auton::turnToHeading(0, 1, 1, 25);
+
+  Drivetrain.driveFor(forward, 40, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+
+  Auton::turnToHeading(45, 1, 1, 25);
+*/
+  //Drivetrain.driveFor(reverse, double distance, distanceUnits units)
 
 //  Auton::turnToHeading(180, 1, 1, 15);
 
 //  Drivetrain.driveFor(forward, 70, distanceUnits::cm, 10, vex::velocityUnits::pct);
-
+/*
   //Match Right
-  /*
-  Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
+  Auton::driveForTime(0.5, fwd, seconds, 20, velocityUnits::pct);
+  //Auton::intakeOn();
+  Auton::rollerTrainForTime(1.5, forward, seconds, 80, vex::velocityUnits::pct);
+  //Auton::intakeOff();
   Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
-  Auton::turnToHeading(270, 1, 1, 25);
-  Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
-  Auton::turnToHeading(315, 1, 1, 25);
+  Auton::turnToHeading(270, 1, 1, 25, 1);
+  Drivetrain.driveFor(forward, 39, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+  Auton::turnToHeading(315, 1, 1, 25, 1);
   Auton::intakeOn();
   Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
   Auton::intakeOff();
   Auton::rollerTrainForTime(2);
   Auton::intakeOn(reverse);
-  Drivetrain.driveFor(reverse, 10, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
-  Auton::intakeOff;
-  */
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 30, vex::velocityUnits::pct);
+  Auton::intakeOff();
+*/
   //Match Left
   /*
   Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
   Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
   Auton::turnToHeading(90, 1, 1, 25);
-  Drivetrain.driveFor(forward, 35, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
+  Drivetrain.driveFor(forward, 39, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
   Auton::turnToHeading(45, 1, 1, 25);
   Auton::intakeOn();
   Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
   Auton::intakeOff();
   Auton::rollerTrainForTime(2);
   Auton::intakeOn(reverse);
-  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 30, vex::velocityUnits::pct);
   Auton::intakeOff();
   */
   //Match Center
@@ -269,7 +424,7 @@ task::sleep(3000);
   Auton::intakeOff();
   Auton::rollerTrainForTime(2);
   Auton::intakeOn(reverse);
-  Auton::driveForTime(1, reverse, seconds, 50, velocityUnits::pct);
+  Auton::driveForTime(0.5, reverse, seconds, 50, velocityUnits::pct);
   Auton::intakeOff();
   */
   // ..........................................................................
@@ -338,7 +493,14 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
     //movement
-
+    /*
+    double right = rightMotorA.rotation(rotationUnits::deg) + rightMotorB.rotation(rotationUnits::deg) / 2 / 360 * 10.21;
+    double left = leftMotorA.rotation(rotationUnits::deg) + leftMotorB.rotation(rotationUnits::deg) / 2 / 360 * 10.21;
+    double theta = (right - left) / (2 * 11.875);
+    Controller1.Screen.clearScreen();
+    Controller1.Screen.setCursor(1, 1);
+    Controller1.Screen.print(theta); 
+    */
     if(Brain.Battery.capacity() > 75) {
       Green.on();
       Yellow.off();
@@ -350,7 +512,7 @@ void usercontrol(void) {
     } else {
       Green.off();
       Yellow.off();
-      Red.off();
+      Red.on();
     }
     
     if (tank == true) {
@@ -369,7 +531,7 @@ void usercontrol(void) {
     if(Controller1.ButtonR1.pressing()) {
       IntakeR.spin(forward, 100, pct);
       IntakeL.spin(forward, 100, pct);
-      TrainT.spin(forward,100, pct);
+      //TrainT.spin(forward,100, pct);
     } else if(Controller1.ButtonR2.pressing()) {
       IntakeR.spin(reverse, 100, pct);
       IntakeL.spin(reverse, 100, pct);
@@ -382,7 +544,7 @@ void usercontrol(void) {
     if(!Controller1.ButtonR1.pressing() && !Controller1.ButtonR2.pressing() && !Controller1.ButtonLeft.pressing() && !Controller1.ButtonUp.pressing()) {
       IntakeL.stop();
       IntakeR.stop();
-      TrainT.stop();
+      //TrainT.stop();
     }
 
     if(cameraToggle == manual) {
@@ -398,7 +560,7 @@ void usercontrol(void) {
         IntakeL.spin(forward, 100, pct);
         IntakeR.spin(forward, 100, pct);
       } else {
-        //TrainT.stop();
+        TrainT.stop();
         TrainB.stop();
       }
     } else {
