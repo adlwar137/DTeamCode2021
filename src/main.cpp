@@ -178,96 +178,139 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
-//task::sleep(3000);
-/*
+
+task::sleep(3000);
+//doesnt work ever
+
+//Auton::turnToHeadingPID(90);
+
 //score first ball
-Auton::rollerTrainForTime(2, forward, seconds, 100, vex::velocityUnits::pct);
+Auton::rollerTrainForTime(1, forward, seconds, 100, vex::velocityUnits::pct);
 //back up
-Drivetrain.driveFor(reverse, 6, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
+Drivetrain.driveFor(reverse, 8, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
 //turn to ball
-Auton::turnToHeading(-85, 1, 1, 25); //should be 90 but jack said change to 85
+Auton::turnToHeadingPID(-85); //should be 90 but jack said change to 85 // best descision to change this ever thank you jack
 //pick up ball
+
 Auton::intakeOn();
-Drivetrain.driveFor(forward, 50, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 56, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
 //turn towards goal
-Auton::turnToHeading(315, 1, 1, 25);
+Auton::turnToHeadingPID(315);
 Auton::intakeOff();
+
 //ram goal :)
-Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
+Auton::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
 //score ball and descore blue ball
 Auton::intakeOn();
-Auton::rollerTrainForTime(0.5);
+Auton::rollerTrainForTime(0.3);
 Auton::intakeOff();
-Auton::rollerTrainForTime(1.5);
+Auton::rollerTrainForTime(1.7);
 //back up from goal
-Drivetrain.driveFor(reverse, 30, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(reverse, 40, vex::distanceUnits::in, 20, vex::velocityUnits::pct);  //back up from second goal
+
 //spit out blue ball and turn towards wall ball
-Auton::intakeOn(reverse);
-Auton::turnToHeading(-90, 1, 1, 15);
-Auton::intakeOff();
+//Auton::intakeForTime(1, reverse);
+Auton::turnToHeadingPID(-90);
 //pick up ball
 Auton::intakeOn();
-Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
+Auton::driveForTime(2, forward, seconds, 25, velocityUnits::pct);
 Auton::intakeOff();
 //back up
 Auton::intakeOn();
-Drivetrain.driveFor(reverse, 9, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(reverse, 16, vex::distanceUnits::in, 15, vex::velocityUnits::pct); //back up to line up with 3rd ball 
 Auton::intakeOff();
+
 //prime it for scoring
 Auton::intakeOn();
 Auton::rollerTrainForTime(0.3);
 Auton::intakeOff();
-Auton::turnToHeading(180, 1, 1, 15);
+
+Auton::turnToHeadingPID(180);
+
+
 //drive towards ball while intaking
+//mid goal
 Auton::intakeOn();
-Drivetrain.driveFor(forward, 39, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
+
+Drivetrain.driveFor(forward, 40, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
 Auton::intakeOff();
 //make sure ball is in robot
 Auton::intakeForTime(1);
 //Turn towards goal
-Auton::turnToHeading(-90, 1, 1, 15);
+Auton::turnToHeadingPID(-90);
 //ram the goal :)
-Auton::driveForTime(2, forward, seconds, 25, velocityUnits::pct);
+Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
 //score one ball
 Auton::rollerTrainForTime(0.5, reverse);
 Auton::rollerTrainForTime(0.5);
 Auton::rollerTrainForTime(0.5, reverse);
 //back up from goal
-Drivetrain.driveFor(reverse, 10, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(reverse, 10, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+
 //Turn in the general direction of the goal
-Auton::turnToHeading(180, 1, 1, 15);
+Auton::turnToHeadingPID(180);
 //drive towards goal
-Drivetrain.driveFor(forward, 45, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 54, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
 //turn towards goal
-Auton::turnToHeading(-135, 1, 1, 15);
+Auton::turnToHeadingPID(-135);
 //ram goal :)
-Auton::driveForTime(2, forward, seconds, 25, velocityUnits::pct);
+
+Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
 //score ball
 Auton::intakeOn();
 Auton::rollerTrainForTime(0.5);
 Auton::intakeOff();
-Auton::rollerTrainForTime(1.5);
+Auton::rollerTrainForTime(1);
 //back up
-Drivetrain.driveFor(reverse, 28, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(reverse, 52, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
 
-Auton::intakeForTime(1, reverse);
+//Auton::intakeForTime(1, reverse);
 
-Auton::turnToHeading(90, 1, 1, 15);
-
-Drivetrain.driveFor(forward, 50, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+Auton::turnToHeadingPID(90);
 
 Auton::intakeOn();
-Drivetrain.driveFor(forward, 30, distanceUnits::cm, 20, velocityUnits::pct);
+Drivetrain.driveFor(forward, 24, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+
+Auton::turnToHeadingPID(180);
 Auton::intakeOff();
 
-Auton::turnToHeading(135, 1, 1, 15);
+//Auton::intakeOn();
+Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
+Auton::rollerTrainOn();
+Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
+//Auton::rollerTrainOff();
+Auton::intakeOff();
 
-Auton::driveForTime(1);
+//copy of first stuff
 
-Auton::rollerTrainForTime(1);
 
-Auton::driveForTime(1, reverse);
-*/
+//score first ball
+Auton::rollerTrainForTime(1, forward, seconds, 100, vex::velocityUnits::pct);
+//back up
+Drivetrain.driveFor(reverse, 8, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
+//turn to ball
+Auton::turnToHeadingPID(-85); //should be 90 but jack said change to 85 // best descision to change this ever thank you jack
+//pick up ball
+
+Auton::intakeOn();
+Drivetrain.driveFor(forward, 56, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+//turn towards goal
+Auton::turnToHeadingPID(315);
+Auton::intakeOff();
+
+//ram goal :)
+Auton::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
+//score ball and descore blue ball
+Auton::intakeOn();
+Auton::rollerTrainForTime(0.3);
+Auton::intakeOff();
+Auton::rollerTrainForTime(1.7);
+//back up from goal
+Drivetrain.driveFor(reverse, 40, vex::distanceUnits::in, 20, vex::velocityUnits::pct);  //back up from second goal
+
+
+
+
 
 //Skills Right
 /*
