@@ -418,7 +418,7 @@ Drivetrain.driveFor(reverse, 40, vex::distanceUnits::in, 20, vex::velocityUnits:
   Drivetrain.driveFor(reverse, 10, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
   */
   //Match Corner
-  
+  /*
   Auton::intakeOn();
   Auton::driveForTime(1, forward, seconds, 50, velocityUnits::pct);
   Auton::intakeOff();
@@ -426,7 +426,7 @@ Drivetrain.driveFor(reverse, 40, vex::distanceUnits::in, 20, vex::velocityUnits:
   Auton::intakeOn(reverse);
   Auton::driveForTime(0.5, reverse, seconds, 50, velocityUnits::pct);
   Auton::intakeOff();
-  
+  */
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
@@ -493,7 +493,14 @@ void usercontrol(void) {
     // update your motors, etc.
     // ........................................................................
     //movement
-
+    /*
+    double right = rightMotorA.rotation(rotationUnits::deg) + rightMotorB.rotation(rotationUnits::deg) / 2 / 360 * 10.21;
+    double left = leftMotorA.rotation(rotationUnits::deg) + leftMotorB.rotation(rotationUnits::deg) / 2 / 360 * 10.21;
+    double theta = (right - left) / (2 * 11.875);
+    Controller1.Screen.clearScreen();
+    Controller1.Screen.setCursor(1, 1);
+    Controller1.Screen.print(theta); 
+    */
     if(Brain.Battery.capacity() > 75) {
       Green.on();
       Yellow.off();
