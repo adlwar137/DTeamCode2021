@@ -2,48 +2,50 @@
 #include "autonomous.h"
 #include <cmath>
 
-void Auton::turnToHeading(int target, int accuracy, int min, int max) {
-  double diff = 10000000; //big number
-  int d; 
+void Auton::turnToHeading(int target, int accuracy, int min, int max, int iterations) {
+  for(int i = 0; i < iterations; i++) {
+    double diff = 10000000; //big number
+    int d; 
 
-  double power = 0;
+    double power = 0;
 
-  while(diff > accuracy) {
-    
-    d = abs(target - Drivetrain.heading()) % 360;
-    diff = d > 180 ? 360 - d : d;
-
-    power = diff / 180 * max + min;
-
-    //clamp power
-    if(power > max) {
-      power = max;
-    }
-
-    if((target - Drivetrain.heading() >= 0 && target - Drivetrain.heading() <= 180) || (target - Drivetrain.heading() <=-180 && target - Drivetrain.heading() >= -360)) {
-      //if need to turn right
-      rightMotorA.spin(reverse, power, percentUnits::pct);
-      rightMotorB.spin(reverse, power, percentUnits::pct);
-      leftMotorA.spin(forward, power, percentUnits::pct);
-      leftMotorB.spin(forward, power, percentUnits::pct);
-    } else {
-      //if need to turn left
-      rightMotorA.spin(forward, power, percentUnits::pct);
-      rightMotorB.spin(forward, power, percentUnits::pct);
-      leftMotorA.spin(reverse, power, percentUnits::pct);
-      leftMotorB.spin(reverse, power, percentUnits::pct);
+    while(diff > accuracy) {
       
+      d = abs(target - Drivetrain.heading()) % 360;
+      diff = d > 180 ? 360 - d : d;
+
+      power = diff / 180 * max + min;
+
+      //clamp power
+      if(power > max) {
+        power = max;
+      }
+
+      if((target - Drivetrain.heading() >= 0 && target - Drivetrain.heading() <= 180) || (target - Drivetrain.heading() <=-180 && target - Drivetrain.heading() >= -360)) {
+        //if need to turn right
+        rightMotorA.spin(reverse, power, percentUnits::pct);
+        rightMotorB.spin(reverse, power, percentUnits::pct);
+        leftMotorA.spin(forward, power, percentUnits::pct);
+        leftMotorB.spin(forward, power, percentUnits::pct);
+      } else {
+        //if need to turn left
+        rightMotorA.spin(forward, power, percentUnits::pct);
+        rightMotorB.spin(forward, power, percentUnits::pct);
+        leftMotorA.spin(reverse, power, percentUnits::pct);
+        leftMotorB.spin(reverse, power, percentUnits::pct);
+        
+      }
+      wait(20, timeUnits::msec);
     }
-    wait(20, timeUnits::msec);
+    Drivetrain.stop();
   }
-  Drivetrain.stop();
 }
 
 void Auton::turnToHeadingPID(int target) {
   //TODO tune this
-  const double Kp = 0.3;
-  const double Ki = 0.00002;
-  const double Kd = 0.25;
+  const double Kp = 0.29;
+  const double Ki = 0.05;
+  const double Kd = 0;
 
   int d;
   int speed;
@@ -53,29 +55,32 @@ void Auton::turnToHeadingPID(int target) {
   double integral;
   double derivative;
 
-  while(error != 0) {
+  //will be used later
+  //int time = vex::timer::system();
+
+  while(error > 1) {
     d = abs(target - Drivetrain.heading()) % 360;
     error = d > 180 ? 360 - d : d;
-
+    /*
     Controller1.Screen.clearScreen();
     Controller1.Screen.setCursor(1, 1);
     Controller1.Screen.print(error);
-
+    */
     integral = integral + error;
 
     if (error < 1) {
       integral = 0;
     }
 
-    /*
-    if (abs(error) > 100) {
+    //fix for the loop integrating while the error is massive causing huge overshoots
+    if (error > 5) {
       integral = 0;
     }
-    */
+    
     derivative = error - previousError;
     previousError = error;
 
-    speed = Kp*error + Ki*integral + Kd*derivative;;
+    speed = Kp*error + Ki*integral + Kd*derivative;
     
 
     if((target - Drivetrain.heading() >= 0 && target - Drivetrain.heading() <= 180) || (target - Drivetrain.heading() <=-180 && target - Drivetrain.heading() >= -360)) {
@@ -92,9 +97,26 @@ void Auton::turnToHeadingPID(int target) {
       leftMotorB.spin(reverse, speed, percentUnits::pct);
       
     }
+    //will be used later
+    /*
+    if(error != previousError) {
+      time = vex::timer::system();
+      
+    }
+    */
     wait(20, timeUnits::msec);
   }
   Drivetrain.stop();
+  //wait for a time then recalculate error to check for overshoot
+  wait(100, msec);
+  d = abs(target - Drivetrain.heading()) % 360;
+  error = d > 180 ? 360 - d : d;
+  //if overshoot then recurse otherwise return
+  if(error > 1) {
+    Auton::turnToHeadingPID(target);
+  } else {
+    return;
+  }
 }
 
 void Auton::turnByPID(int target) {
@@ -171,14 +193,9 @@ void Auton::drivePID(double target, vex::distanceUnits distance) {
 }
 
 void Auton::driveForTime(double time, vex::directionType direction, vex::timeUnits timeUnits, double speed, vex::velocityUnits velocityUnits) {
-  rightMotorA.spin(direction, speed, velocityUnits);
-  rightMotorB.spin(direction, speed, velocityUnits);
-  leftMotorA.spin(direction, speed, velocityUnits);
-  leftMotorB.spinFor(direction, time, timeUnits, speed, velocityUnits);
-  rightMotorA.stop();
-  rightMotorB.stop();
-  leftMotorA.stop();
-  leftMotorB.stop();
+  Drivetrain.drive(direction, speed, velocityUnits);
+  wait(time, timeUnits);
+  Drivetrain.stop();
 }
 
 void Auton::setAllBrake(vex::brakeType brakeType) {

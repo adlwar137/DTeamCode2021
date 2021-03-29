@@ -1,7 +1,7 @@
 namespace Auton { 
 
     //Wierd P loop amalgamation if the functions below this one work then don't use this one
-    void turnToHeading(int target, int accuracy, int min, int max);
+    void turnToHeading(int target, int accuracy, int min, int max, int interations);
 
     //turn using a pid loop (takes degrees based on absolute Heading)
     void turnToHeadingPID(int target);
