@@ -162,6 +162,9 @@ void pre_auton(void) {
   Right = new drawing::Button(maxWidth/2, 0, maxWidth, maxHeight, LeftButton, "Right (8 Pointer)", color(0,0,255));
   Left = new drawing::Button(0,0, maxWidth/2, maxHeight, RightButton, "Left (8 Pointer)", color(255,0,0));
 
+  Red.off();
+  Green.off();
+  Yellow.off();
 }
 
 /*---------------------------------------------------------------------------*/
