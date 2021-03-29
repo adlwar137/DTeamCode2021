@@ -361,14 +361,16 @@ Drivetrain.driveFor(reverse, 40, vex::distanceUnits::in, 20, vex::velocityUnits:
 //  Auton::turnToHeading(180, 1, 1, 15);
 
 //  Drivetrain.driveFor(forward, 70, distanceUnits::cm, 10, vex::velocityUnits::pct);
-
-  //Match Right
 /*
-  Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
+  //Match Right
+  Auton::driveForTime(0.5, fwd, seconds, 20, velocityUnits::pct);
+  //Auton::intakeOn();
+  Auton::rollerTrainForTime(1.5, forward, seconds, 80, vex::velocityUnits::pct);
+  //Auton::intakeOff();
   Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
-  Auton::turnToHeading(270, 1, 1, 25);
-  Drivetrain.driveFor(forward, 39, vex::distanceUnits::cm, 10, vex::velocityUnits::pct);
-  Auton::turnToHeading(315, 1, 1, 25);
+  Auton::turnToHeading(270, 1, 1, 25, 1);
+  Drivetrain.driveFor(forward, 39, vex::distanceUnits::cm, 20, vex::velocityUnits::pct);
+  Auton::turnToHeading(315, 1, 1, 25, 1);
   Auton::intakeOn();
   Auton::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
   Auton::intakeOff();
