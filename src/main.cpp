@@ -179,7 +179,7 @@ void pre_auton(void) {
 
 void autonomous(void) {
 
-task::sleep(3000);
+//task::sleep(3000);
 //doesnt work ever
 
 //Auton::turnToHeadingPID(90);
@@ -193,7 +193,7 @@ Auton::turnToHeadingPID(-85); //should be 90 but jack said change to 85 // best 
 //pick up ball
 
 Auton::intakeOn();
-Drivetrain.driveFor(forward, 56, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 58, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
 //turn towards goal
 Auton::turnToHeadingPID(315);
 Auton::intakeOff();
@@ -269,7 +269,7 @@ Drivetrain.driveFor(reverse, 52, vex::distanceUnits::in, 20, vex::velocityUnits:
 Auton::turnToHeadingPID(90);
 
 Auton::intakeOn();
-Drivetrain.driveFor(forward, 24, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 32, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
 
 Auton::turnToHeadingPID(180);
 Auton::intakeOff();
@@ -289,13 +289,13 @@ Auton::rollerTrainForTime(1, forward, seconds, 100, vex::velocityUnits::pct);
 //back up
 Drivetrain.driveFor(reverse, 8, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
 //turn to ball
-Auton::turnToHeadingPID(-85); //should be 90 but jack said change to 85 // best descision to change this ever thank you jack
+Auton::turnToHeadingPID(85); //should be 90 but jack said change to 85 // best descision to change this ever thank you jack
 //pick up ball
 
 Auton::intakeOn();
 Drivetrain.driveFor(forward, 56, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
 //turn towards goal
-Auton::turnToHeadingPID(315);
+Auton::turnToHeadingPID(135);
 Auton::intakeOff();
 
 //ram goal :)
@@ -501,6 +501,7 @@ void usercontrol(void) {
     Controller1.Screen.setCursor(1, 1);
     Controller1.Screen.print(theta); 
     */
+
     if(Brain.Battery.capacity() > 75) {
       Green.on();
       Yellow.off();
