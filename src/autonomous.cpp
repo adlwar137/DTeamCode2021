@@ -43,8 +43,9 @@ void Auton::turnToHeading(int target, int accuracy, int min, int max, int iterat
 
 void Auton::turnToHeadingPID(int target) {
   //TODO tune this
+  //STOP COPYING MY CODE LANDIN
   const double Kp = 0.29;
-  const double Ki = 0.05;
+  const double Ki = 0.04;
   const double Kd = 0;
 
   int d;
@@ -59,12 +60,14 @@ void Auton::turnToHeadingPID(int target) {
   //int time = vex::timer::system();
 
   while(error > 1) {
-    d = abs(target - Drivetrain.heading()) % 360;
+    double heading = Drivetrain.heading();
+    
+    d = abs(target - heading) % 360;
     error = d > 180 ? 360 - d : d;
     /*
     Controller1.Screen.clearScreen();
     Controller1.Screen.setCursor(1, 1);
-    Controller1.Screen.print(error);
+    Controller1.Screen.print(heading);
     */
     integral = integral + error;
 
@@ -83,7 +86,7 @@ void Auton::turnToHeadingPID(int target) {
     speed = Kp*error + Ki*integral + Kd*derivative;
     
 
-    if((target - Drivetrain.heading() >= 0 && target - Drivetrain.heading() <= 180) || (target - Drivetrain.heading() <=-180 && target - Drivetrain.heading() >= -360)) {
+    if((target - heading >= 0 && target - heading <= 180) || (target - heading <=-180 && target - heading >= -360)) {
       //if need to turn right
       rightMotorA.spin(reverse, speed, percentUnits::pct);
       rightMotorB.spin(reverse, speed, percentUnits::pct);
@@ -104,7 +107,7 @@ void Auton::turnToHeadingPID(int target) {
       
     }
     */
-    wait(20, timeUnits::msec);
+    wait(100, timeUnits::msec);
   }
   Drivetrain.stop();
   //wait for a time then recalculate error to check for overshoot
