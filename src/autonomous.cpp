@@ -45,7 +45,7 @@ void Auton::turnToHeadingPID(int target) {
   //TODO tune this
   //STOP COPYING MY CODE LANDIN
   const double Kp = 0.29;
-  const double Ki = 0.04;
+  const double Ki = 0.045;
   const double Kd = 0;
 
   int d;
