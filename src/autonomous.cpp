@@ -133,8 +133,8 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   leftMotorB.resetPosition();
 
   //TODO tune this
-  const double Kp = 1;
-  const double Ki = 0;
+  const double Kp = 5.5;
+  const double Ki = 0.5;
   const double Kd = 0;
 
   int speed;
@@ -144,34 +144,39 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   double integral;
   double derivative;
 
-  while(error > 1) {
-    error = target - (
+  while(error > 0.1) {
+    double avgpos = (
       rightMotorA.position(rotationUnits) +
       rightMotorB.position(rotationUnits) +
       leftMotorA.position(rotationUnits) +
       leftMotorB.position(rotationUnits)
     ) / 4;
 
+    error = target - avgpos;
+
     integral = integral + error;
 
-    if (error < 1) {
+    //IF YOU DON'T CHANGE THIS CORRECTLY IT WON'T WORK FOR YOUR BOT
+    if (error < 0.5) {
       integral = 0;
     }
 
-    /*
-    if (abs(error) > 100) {
+    
+    if (abs(error) > 1) {
       integral = 0;
     }
-    */
+    
     derivative = error - previousError;
     previousError = error;
 
     speed = Kp*error + Ki*integral + Kd*derivative;;
     
-    rightMotorA.spin(forward, speed, percentUnits::pct);
-    rightMotorB.spin(forward, speed, percentUnits::pct);
-    leftMotorA.spin(forward, speed, percentUnits::pct);
-    leftMotorB.spin(forward, speed, percentUnits::pct);
+    //UNDERSTAND HOW THIS WORKS BELOW LANDIN
+    if(avgpos < target) {
+      Drivetrain.drive(forward, speed, velocityUnits::pct);
+    } else {
+      Drivetrain.drive(reverse, speed, velocityUnits::pct);
+    }
 
     wait(20, timeUnits::msec);
   }
