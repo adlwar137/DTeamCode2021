@@ -70,21 +70,18 @@ void Auton::turnToHeadingPID(int target) {
     Controller1.Screen.print(heading);
     */
     integral = integral + error;
+    derivative = error - previousError;
+    previousError = error;
 
     if (error < 1) {
       integral = 0;
     }
-
     //fix for the loop integrating while the error is massive causing huge overshoots
     if (error > 5) {
       integral = 0;
     }
     
-    derivative = error - previousError;
-    previousError = error;
-
     speed = Kp*error + Ki*integral + Kd*derivative;
-    
 
     if((target - heading >= 0 && target - heading <= 180) || (target - heading <=-180 && target - heading >= -360)) {
       //if need to turn right
