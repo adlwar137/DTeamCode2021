@@ -130,9 +130,9 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   leftMotorB.resetPosition();
 
   //TODO tune this
-  const double Kp = 5.5;
-  const double Ki = 0.5;
-  const double Kd = 0;
+  const double Kp = 10;
+  const double Ki = 0.3;
+  const double Kd = 1;
 
   int speed;
   double previousError;
@@ -210,7 +210,7 @@ void Auton::drivePID(double target, vex::distanceUnits distance) {
     amount = target / (2 * M_PI * 3.81);
     break;
     case vex::distanceUnits::in:
-    amount = target / (2 * M_PI * 1.5);
+    amount = target / (2 * M_PI * 1.625);
     break;
     case vex::distanceUnits::mm:
     amount = target / (2 * M_PI * 38.1);
