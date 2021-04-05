@@ -141,6 +141,10 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   double integral;
   double derivative;
 
+  double startHeading = Drivetrain.heading();
+  const double skewTolerance = 3;
+  
+
   while(error > 0.1) {
     double avgpos = (
       rightMotorA.position(rotationUnits) +
@@ -150,11 +154,16 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
     ) / 4;
 
     error = target - avgpos;
+    double headingDiff = Drivetrain.heading() - startHeading;
+
+    Controller1.Screen.clearScreen();
+    Controller1.Screen.setCursor(1, 1);
+    Controller1.Screen.print(error);
 
     integral = integral + error;
 
     //IF YOU DON'T CHANGE THIS CORRECTLY IT WON'T WORK FOR YOUR BOT
-    if (error < 0.5) {
+    if (error < 0.2 || avgpos < target) {
       integral = 0;
     }
 
@@ -170,7 +179,20 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
     
     //UNDERSTAND HOW THIS WORKS BELOW LANDIN
     if(avgpos < target) {
-      Drivetrain.drive(forward, speed, velocityUnits::pct);
+      //i have brain damage
+      //this *should* make the bot correct itself while driving even if the base is skewed using the gyroscope
+      //actually the entire autonomous program is hanging on by the gyroscopy
+      //god help me
+      //this is awful please work
+      if(fabs(headingDiff) > skewTolerance || fabs(headingDiff) < skewTolerance) {
+        rightMotorA.spin(forward, speed + (headingDiff * 0.05), pct);
+        rightMotorB.spin(forward, speed + (headingDiff * 0.05), pct);
+
+        leftMotorA.spin(forward, speed - (headingDiff * 0.05), pct);
+        leftMotorB.spin(forward, speed - (headingDiff * 0.05), pct);
+      } else {
+        Drivetrain.drive(forward, speed, velocityUnits::pct);
+      }
     } else {
       Drivetrain.drive(reverse, speed, velocityUnits::pct);
     }
