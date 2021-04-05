@@ -179,6 +179,8 @@ void pre_auton(void) {
 
 void autonomous(void) {
 
+//Auton::drivePID(56, distanceUnits::in);
+
 //task::sleep(3000);
 
 //Auton::drivePID(48, vex::distanceUnits::in);
@@ -196,6 +198,7 @@ Auton::turnToHeadingPID(-90); //should be 90 but jack said change to 85 // best 
 
 Auton::intakeOn();
 Drivetrain.driveFor(forward, 56, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+//Auton::drivePID(56, distanceUnits::in);
 //turn towards goal
 Auton::turnToHeadingPID(315);
 Auton::intakeOff();
@@ -203,10 +206,7 @@ Auton::intakeOff();
 //ram goal :)
 Auton::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
 //score ball and descore blue ball
-Auton::intakeOn();
-Auton::rollerTrainForTime(0.3);
-Auton::intakeOff();
-Auton::rollerTrainForTime(1);
+Auton::rollerTrainForTime(2, forward, seconds, 80);
 //back up from goal
 Auton::intakeOn(reverse);
 Drivetrain.driveFor(reverse, 38, vex::distanceUnits::in, 20, vex::velocityUnits::pct);  //back up from second goal
@@ -236,7 +236,7 @@ Auton::turnToHeadingPID(180);
 //mid goal
 Auton::intakeOn();
 
-Drivetrain.driveFor(forward, 42, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 39, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
 Auton::intakeOff();
 //make sure ball is in robot
 Auton::intakeForTime(1);
@@ -246,7 +246,7 @@ Auton::turnToHeadingPID(-90);
 Auton::driveForTime(0.5, forward, seconds, 15, velocityUnits::pct);
 //score one ball
 Auton::rollerTrainForTime(0.5, reverse);
-Auton::rollerTrainForTime(0.6);
+Auton::rollerTrainForTime(0.5);
 Auton::rollerTrainForTime(0.5, reverse);
 //back up from goal
 Drivetrain.driveFor(reverse, 10, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
@@ -266,22 +266,23 @@ Auton::rollerTrainForTime(0.3);
 Auton::intakeOff();
 Auton::rollerTrainForTime(1.2);
 //back up
-Drivetrain.driveFor(reverse, 54, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
-
+Auton::intakeOn(reverse);
+Drivetrain.driveFor(reverse, 52, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+Auton::intakeOff();
 //Auton::intakeForTime(1, reverse);
 
 Auton::turnToHeadingPID(90);
 
 Auton::intakeOn();
-Drivetrain.driveFor(forward, 30, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 28, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
 
 Auton::turnToHeadingPID(180);
 Auton::intakeOff();
 
 //Auton::intakeOn();
-Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
+Auton::driveForTime(1.5, forward, seconds, 15, velocityUnits::pct);
 Auton::rollerTrainOn();
-Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
+Auton::driveForTime(0.5, forward, seconds, 15, velocityUnits::pct);
 //Auton::rollerTrainOff();
 Auton::intakeOff();
 
@@ -291,13 +292,13 @@ Auton::intakeOff();
 //score first ball
 Auton::rollerTrainForTime(1, forward, seconds, 100, vex::velocityUnits::pct);
 //back up
-Drivetrain.driveFor(reverse, 8, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
+Drivetrain.driveFor(reverse, 6, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
 //turn to ball
-Auton::turnToHeadingPID(85); //should be 90 but jack said change to 85 // best descision to change this ever thank you jack
+Auton::turnToHeadingPID(90); //should be 90 but jack said change to 85 // best descision to change this ever thank you jack
 //pick up ball
 
 Auton::intakeOn();
-Drivetrain.driveFor(forward, 56, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 54, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
 //turn towards goal
 Auton::turnToHeadingPID(135);
 Auton::intakeOff();
