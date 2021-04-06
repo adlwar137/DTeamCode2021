@@ -45,7 +45,7 @@ void Auton::turnToHeadingPID(int target) {
   //TODO tune this
   //STOP COPYING MY CODE LANDIN
   const double Kp = 0.29;
-  const double Ki = 0.045;
+  const double Ki = 0.055;
   const double Kd = 0;
 
   int d;
@@ -76,6 +76,7 @@ void Auton::turnToHeadingPID(int target) {
     if (error < 1) {
       integral = 0;
     }
+
     //fix for the loop integrating while the error is massive causing huge overshoots
     if (error > 5) {
       integral = 0;
@@ -184,15 +185,15 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
       //actually the entire autonomous program is hanging on by the gyroscopy
       //god help me
       //this is awful please work
-      if(fabs(headingDiff) > skewTolerance || fabs(headingDiff) < skewTolerance) {
+      /*if(fabs(headingDiff) > skewTolerance || fabs(headingDiff) < skewTolerance) {
         rightMotorA.spin(forward, speed + (headingDiff * 0.05), pct);
         rightMotorB.spin(forward, speed + (headingDiff * 0.05), pct);
 
         leftMotorA.spin(forward, speed - (headingDiff * 0.05), pct);
         leftMotorB.spin(forward, speed - (headingDiff * 0.05), pct);
-      } else {
+      } else {*/
         Drivetrain.drive(forward, speed, velocityUnits::pct);
-      }
+      //}
     } else {
       Drivetrain.drive(reverse, speed, velocityUnits::pct);
     }
