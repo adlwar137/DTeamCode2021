@@ -66,7 +66,7 @@ void stopDrive() {
 drawing::Button* Right;
 drawing::Button* Left;
 
-void RightButton() {
+void RightAuton() {
   Controller1.Screen.clearScreen();
   Controller1.Screen.setCursor(1,1);
   Controller1.Screen.print("you selected Right!");
@@ -74,7 +74,7 @@ void RightButton() {
   delete Right;
   delete Left;
 }
-void LeftButton() {
+void LeftAuton() {
   Controller1.Screen.clearScreen();
   Controller1.Screen.setCursor(1,1);
   Controller1.Screen.print("you pressed Left!");
@@ -88,7 +88,7 @@ void Bluescreen() {
 
 void click() {
   //check if any buttons have been pressed
-  drawing::Button::press();
+  //drawing::Button::press();
   //legacy auton selection (will be removed soon)
   /*
   int xp = Brain.Screen.xPosition();
@@ -159,8 +159,9 @@ void pre_auton(void) {
   Vision17.setLedMode(vision::ledMode::manual);
 
   //autonomous selection
-  Right = new drawing::Button(maxWidth/2, 0, maxWidth, maxHeight, LeftButton, "Right (8 Pointer)", color(0,0,255));
-  Left = new drawing::Button(0,0, maxWidth/2, maxHeight, RightButton, "Left (8 Pointer)", color(255,0,0));
+  Brain.Screen.pressed(click);
+  Right = new drawing::Button(maxWidth/2, 0, maxWidth, maxHeight/2, LeftAuton, "Right (8 Pointer)", color(0,0,255));
+  Left = new drawing::Button(0,0, maxWidth/2, maxHeight/2, RightAuton, "Left (8 Pointer)", color(255,0,0));
 
   Red.off();
   Green.off();
