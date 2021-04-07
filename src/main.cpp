@@ -522,19 +522,19 @@ void usercontrol(void) {
       Yellow.off();
       Red.on();
     }
+
     
     if (tank == true) {
-      leftMotorA.spin(forward, Controller1.Axis3.value(), pct);
-      leftMotorB.spin(forward, Controller1.Axis3.value(), pct);
-      rightMotorA.spin(forward, Controller1.Axis2.value(), pct);
-      rightMotorB.spin(forward, Controller1.Axis2.value(), pct);
+      leftMotorA.spin(forward, Controller1.Axis3.value() * 0.8, pct);
+      leftMotorB.spin(forward, Controller1.Axis3.value() * 0.8, pct);
+      rightMotorA.spin(forward, Controller1.Axis2.value() * 0.8, pct);
+      rightMotorB.spin(forward, Controller1.Axis2.value() * 0.8, pct);
     } else {
-      leftMotorA.spin(forward, Controller1.Axis3.value() + Controller1.Axis1.value(), pct);
-      leftMotorB.spin(forward, Controller1.Axis3.value() + Controller1.Axis1.value(), pct);
-      rightMotorA.spin(forward, Controller1.Axis3.value() - Controller1.Axis1.value(), pct);
-      rightMotorB.spin(forward, Controller1.Axis3.value() - Controller1.Axis1.value(), pct);
+      leftMotorA.spin(forward, (Controller1.Axis3.value() + Controller1.Axis1.value()) * 0.8, pct);
+      leftMotorB.spin(forward, (Controller1.Axis3.value() + Controller1.Axis1.value()) * 0.8, pct);
+      rightMotorA.spin(forward, (Controller1.Axis3.value() - Controller1.Axis1.value()) * 0.8, pct);
+      rightMotorB.spin(forward, (Controller1.Axis3.value() - Controller1.Axis1.value()) * 0.8, pct);
     }
-
     //Intake
     if(Controller1.ButtonR1.pressing()) {
       IntakeR.spin(forward, 100, pct);
