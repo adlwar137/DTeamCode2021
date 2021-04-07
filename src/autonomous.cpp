@@ -130,7 +130,12 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   leftMotorA.resetPosition();
   leftMotorB.resetPosition();
 
+  //maybe i should somehow make a function to do all the pid math
+  //it would really streamline this if i knew c++
+
+
   //TODO tune this
+  //Drive PID variables
   const double Kp = 12;
   const double Ki = 0.3;
   const double Kd = 1;
@@ -142,11 +147,25 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   double integral;
   double derivative;
 
-  double startHeading = Drivetrain.heading();
-  const double skewTolerance = 3;
-  
 
+  //turn pid variables for keeping it straight while turning
+  double startHeading = Drivetrain.heading();
+  
+  const double TKp = 0;
+  const double TKi = 0;
+  const double TKd = 0;
+
+  double turn;
+  double TpreviousError;
+  int d;
+
+  double Terror = 1;
+  double Tintegral;
+  double Tderivative;
+
+  //main pid loop
   while(error > 0.1) {
+
     double avgpos = (
       rightMotorA.position(rotationUnits) +
       rightMotorB.position(rotationUnits) +
@@ -154,48 +173,57 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
       leftMotorB.position(rotationUnits)
     ) / 4;
 
+    //calculate error for both drive and turn
     error = target - avgpos;
     double headingDiff = Drivetrain.heading() - startHeading;
+
 
     Controller1.Screen.clearScreen();
     Controller1.Screen.setCursor(1, 1);
     Controller1.Screen.print(error);
 
+    //drive pid math
     integral = integral + error;
+    derivative = error - previousError;
+    previousError = error;
+    //turn pid math
+    Tintegral = Tintegral + Terror;
+    Tderivative = Terror - TpreviousError;
+    TpreviousError = Terror;
 
     //IF YOU DON'T CHANGE THIS CORRECTLY IT WON'T WORK FOR YOUR BOT
-    if (error < 0.2 || avgpos < target) {
+    //not sure this does anything important
+    /*
+    if (error < 0.1 || avgpos < target) {
       integral = 0;
     }
+    */
 
-    
+    //anti windup drive
     if (abs(error) > 1) {
       integral = 0;
     }
-    
-    derivative = error - previousError;
-    previousError = error;
 
-    speed = Kp*error + Ki*integral + Kd*derivative;;
+    //anti windup turn
+    if(abs(Terror) > 1) {
+      Tintegral = 0;
+    }
     
-    //UNDERSTAND HOW THIS WORKS BELOW LANDIN
+    speed = Kp*error + Ki*integral + Kd*derivative;
+    turn = TKp*Terror + TKi*integral + Kd*Tderivative;
+    
+    //gotta use pid 2 electric boogaloo
     if(avgpos < target) {
-      //i have brain damage
-      //this *should* make the bot correct itself while driving even if the base is skewed using the gyroscope
-      //actually the entire autonomous program is hanging on by the gyroscopy
-      //god help me
-      //this is awful please work
-      /*
-      if(fabs(headingDiff) > skewTolerance || fabs(headingDiff) < skewTolerance) {
-        rightMotorA.spin(forward, speed + (headingDiff * 0.1), pct);
-        rightMotorB.spin(forward, speed + (headingDiff * 0.1), pct);
+      //i hate the double pid solution so much
+      leftMotorA.spin(forward, speed + turn, velocityUnits::pct);
+      leftMotorB.spin(forward, speed + turn, velocityUnits::pct);
 
-        leftMotorA.spin(forward, speed - (headingDiff * 0.1), pct);
-        leftMotorB.spin(forward, speed - (headingDiff * 0.1), pct);
-      } else {*/
-        Drivetrain.drive(forward, speed, velocityUnits::pct);
-      //}
+      rightMotorA.spin(forward, speed - turn, velocityUnits::pct);
+      rightMotorB.spin(forward, speed - turn, velocityUnits::pct);
     } else {
+      //TODO
+      //think about how the robot moves in reverse and make this work with turn pid
+      //mind too jello to think
       Drivetrain.drive(reverse, speed, velocityUnits::pct);
     }
 
