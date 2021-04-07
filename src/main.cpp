@@ -523,6 +523,12 @@ void usercontrol(void) {
       Red.on();
     }
 
+    double avgMotorHeat = (leftMotorA.temperature() + leftMotorB.temperature() + rightMotorA.temperature() + rightMotorB.temperature()) / 4;
+
+    //motor heat readings
+    Controller1.Screen.clearScreen();
+    Controller1.Screen.setCursor(1, 1);
+    Controller1.Screen.print(avgMotorHeat);
     
     if (tank == true) {
       leftMotorA.spin(forward, Controller1.Axis3.value() * 0.8, pct);
