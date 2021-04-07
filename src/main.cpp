@@ -184,7 +184,7 @@ void autonomous(void) {
 
 //task::sleep(3000);
 
-//Auton::drivePID(48, vex::distanceUnits::in);
+Auton::drivePID(48, vex::distanceUnits::in);
 
 //doesnt work ever
 
@@ -198,19 +198,19 @@ Auton::turnToHeadingPID(-90); //should be 90 but jack said change to 85 // best 
 //pick up ball
 
 Auton::intakeOn();
-Drivetrain.driveFor(forward, 56, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 52, vex::distanceUnits::in, 35, vex::velocityUnits::pct);
 //Auton::drivePID(56, distanceUnits::in);
 //turn towards goal
 Auton::turnToHeadingPID(315);
 Auton::intakeOff();
 
 //ram goal :)
-Auton::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
+Auton::driveForTime(1, forward, seconds, 15, velocityUnits::pct);
 //score ball and descore blue ball
 Auton::rollerTrainForTime(2, forward, seconds, 80);
 //back up from goal
 Auton::intakeOn(reverse);
-Drivetrain.driveFor(reverse, 38, vex::distanceUnits::in, 20, vex::velocityUnits::pct);  //back up from second goal
+Drivetrain.driveFor(reverse, 38, vex::distanceUnits::in, 25, vex::velocityUnits::pct);  //back up from second goal
 Auton::intakeOff();
 
 //spit out blue ball and turn towards wall ball
@@ -222,7 +222,7 @@ Auton::driveForTime(2, forward, seconds, 25, velocityUnits::pct);
 Auton::intakeOff();
 //back up
 Auton::intakeOn();
-Drivetrain.driveFor(reverse, 16, vex::distanceUnits::in, 15, vex::velocityUnits::pct); //back up to line up with 3rd ball 
+Drivetrain.driveFor(reverse, 16, vex::distanceUnits::in, 25, vex::velocityUnits::pct); //back up to line up with 3rd ball 
 Auton::intakeOff();
 
 //prime it for scoring
@@ -237,25 +237,25 @@ Auton::turnToHeadingPID(180);
 //mid goal
 Auton::intakeOn();
 
-Drivetrain.driveFor(forward, 39, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 39, vex::distanceUnits::in, 25, vex::velocityUnits::pct);
 Auton::intakeOff();
 //make sure ball is in robot
 Auton::intakeForTime(1);
 //Turn towards goal
 Auton::turnToHeadingPID(-90);
 //ram the goal :)
-Auton::driveForTime(0.5, forward, seconds, 15, velocityUnits::pct);
+Auton::driveForTime(0.5, forward, seconds, 25, velocityUnits::pct);
 //score one ball
 Auton::rollerTrainForTime(0.5, reverse);
 Auton::rollerTrainForTime(0.5);
 Auton::rollerTrainForTime(0.5, reverse);
 //back up from goal
-Drivetrain.driveFor(reverse, 10, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(reverse, 10, vex::distanceUnits::in, 30, vex::velocityUnits::pct);
 
 //Turn in the general direction of the goal
 Auton::turnToHeadingPID(180);
 //drive towards goal
-Drivetrain.driveFor(forward, 55, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 55, vex::distanceUnits::in, 30, vex::velocityUnits::pct);
 //turn towards goal
 Auton::turnToHeadingPID(-135);
 //ram goal :)
@@ -268,14 +268,14 @@ Auton::intakeOff();
 Auton::rollerTrainForTime(1.2);
 //back up
 Auton::intakeOn(reverse);
-Drivetrain.driveFor(reverse, 52, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(reverse, 56, vex::distanceUnits::in, 30, vex::velocityUnits::pct);
 Auton::intakeOff();
 //Auton::intakeForTime(1, reverse);
 
 Auton::turnToHeadingPID(90);
 
 Auton::intakeOn();
-Drivetrain.driveFor(forward, 28, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+Drivetrain.driveFor(forward, 28, vex::distanceUnits::in, 30, vex::velocityUnits::pct);
 
 Auton::turnToHeadingPID(180);
 Auton::intakeOff();
@@ -369,7 +369,7 @@ Drivetrain.driveFor(reverse, 40, vex::distanceUnits::in, 20, vex::velocityUnits:
 //  Drivetrain.driveFor(forward, 70, distanceUnits::cm, 10, vex::velocityUnits::pct);
 
   //Match Right sort of working
-  
+/*
   Auton::rollerTrainOn();
   Auton::driveForTime(0.5, fwd, seconds, 20, velocityUnits::pct);
   Auton::rollerTrainOff();
@@ -385,7 +385,7 @@ Drivetrain.driveFor(reverse, 40, vex::distanceUnits::in, 20, vex::velocityUnits:
   Auton::intakeOn(reverse);
   Drivetrain.driveFor(reverse, 20, vex::distanceUnits::in, 30, vex::velocityUnits::pct);
   Auton::intakeOff();
-  
+*/
   //Match Left
   /*
   Auton::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
