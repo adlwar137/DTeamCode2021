@@ -131,7 +131,7 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   leftMotorB.resetPosition();
 
   //TODO tune this
-  const double Kp = 10;
+  const double Kp = 12;
   const double Ki = 0.3;
   const double Kd = 1;
 
@@ -185,12 +185,13 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
       //actually the entire autonomous program is hanging on by the gyroscopy
       //god help me
       //this is awful please work
-      /*if(fabs(headingDiff) > skewTolerance || fabs(headingDiff) < skewTolerance) {
-        rightMotorA.spin(forward, speed + (headingDiff * 0.05), pct);
-        rightMotorB.spin(forward, speed + (headingDiff * 0.05), pct);
+      /*
+      if(fabs(headingDiff) > skewTolerance || fabs(headingDiff) < skewTolerance) {
+        rightMotorA.spin(forward, speed + (headingDiff * 0.1), pct);
+        rightMotorB.spin(forward, speed + (headingDiff * 0.1), pct);
 
-        leftMotorA.spin(forward, speed - (headingDiff * 0.05), pct);
-        leftMotorB.spin(forward, speed - (headingDiff * 0.05), pct);
+        leftMotorA.spin(forward, speed - (headingDiff * 0.1), pct);
+        leftMotorB.spin(forward, speed - (headingDiff * 0.1), pct);
       } else {*/
         Drivetrain.drive(forward, speed, velocityUnits::pct);
       //}
