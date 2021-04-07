@@ -191,7 +191,6 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
     Tderivative = Terror - TpreviousError;
     TpreviousError = Terror;
 
-    //IF YOU DON'T CHANGE THIS CORRECTLY IT WON'T WORK FOR YOUR BOT
     //not sure this does anything important
     /*
     if (error < 0.1 || avgpos < target) {
