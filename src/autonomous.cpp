@@ -151,7 +151,7 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   //turn pid variables for keeping it straight while turning
   double startHeading = Drivetrain.heading();
   
-  const double TKp = 0;
+  const double TKp = 1;
   const double TKi = 0;
   const double TKd = 0;
 
