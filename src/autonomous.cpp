@@ -45,7 +45,7 @@ void Auton::turnToHeadingPID(int target) {
   //TODO tune this
   //STOP COPYING MY CODE LANDIN
   const double Kp = 0.29;
-  const double Ki = 0.055;
+  const double Ki = 0.06;
   //sensitive to noise BE CAREFUL
   //hopefully predictive enough to reduce the massive overshoots while maintaining decent speed
   //god help me
@@ -139,9 +139,9 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits, vex::direc
 
   //TODO tune this
   //Drive PID variables
-  const double Kp = 10;
-  const double Ki = 0.5;
-  const double Kd = 1;
+  const double Kp = 10; //was 10
+  const double Ki = 0.5; //was 0.5
+  const double Kd = 1; //was 1
 
   int speed;
   double previousError;
@@ -154,7 +154,7 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits, vex::direc
   //turn pid variables for keeping it straight while turning
   double startHeading = Drivetrain.heading();
   
-  const double TKp = 0.5;
+  const double TKp = 0.5; //was 0.5
   const double TKi = 0;
   const double TKd = 0;
 
@@ -180,10 +180,6 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits, vex::direc
     error = target - avgpos;
     double headingDiff = Drivetrain.heading() - startHeading;
 
-
-    Controller1.Screen.clearScreen();
-    Controller1.Screen.setCursor(1, 1);
-    Controller1.Screen.print(error);
 
     //drive pid math
     integral = integral + error;
@@ -218,12 +214,15 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits, vex::direc
     
     speed = Kp*error + Ki*integral + Kd*derivative;
     turn = TKp*Terror + TKi*Tintegral + Kd*Tderivative;
+    
 
     //yeah fuck it im just gonna clamp it
     //no clever solution today
     if(speed > maxspeed) {
       speed = maxspeed;
     }
+
+
     
     //gotta use pid 2 electric boogaloo
     if(avgpos < target) {
@@ -237,13 +236,13 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits, vex::direc
       //TODO
       //think about how the robot moves in reverse and make this work with turn pid
       //mind too jello to think
-      leftMotorA.spin(reverse, speed + turn, velocityUnits::pct);
-      leftMotorB.spin(reverse, speed + turn, velocityUnits::pct);
+      leftMotorA.spin(forward, speed + turn, velocityUnits::pct);
+      leftMotorB.spin(forward, speed + turn, velocityUnits::pct);
 
-      rightMotorA.spin(reverse, speed - turn, velocityUnits::pct);
-      rightMotorB.spin(reverse, speed - turn, velocityUnits::pct);
+      rightMotorA.spin(forward, speed - turn, velocityUnits::pct);
+      rightMotorB.spin(forward, speed - turn, velocityUnits::pct);
     }
-
+    
     wait(20, timeUnits::msec);
   }
   Drivetrain.stop();
