@@ -46,7 +46,10 @@ void Auton::turnToHeadingPID(int target) {
   //STOP COPYING MY CODE LANDIN
   const double Kp = 0.29;
   const double Ki = 0.055;
-  const double Kd = 0;
+  //sensitive to noise BE CAREFUL
+  //hopefully predictive enough to reduce the massive overshoots while maintaining decent speed
+  //god help me
+  const double Kd = 0.05;
 
   int d;
   int speed;
@@ -124,7 +127,7 @@ void Auton::turnByPID(int target) {
   turnToHeadingPID(target + Drivetrain.heading());
 }
 
-void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
+void Auton::drivePID(double target, vex::rotationUnits rotationUnits, vex::directionType direction, double maxspeed, vex::velocityUnits velocityUnits) {
   rightMotorA.resetPosition();
   rightMotorB.resetPosition();
   leftMotorA.resetPosition();
@@ -136,8 +139,8 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
 
   //TODO tune this
   //Drive PID variables
-  const double Kp = 12;
-  const double Ki = 0.3;
+  const double Kp = 10;
+  const double Ki = 0.5;
   const double Kd = 1;
 
   int speed;
@@ -151,7 +154,7 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   //turn pid variables for keeping it straight while turning
   double startHeading = Drivetrain.heading();
   
-  const double TKp = 1;
+  const double TKp = 0.5;
   const double TKi = 0;
   const double TKd = 0;
 
@@ -164,7 +167,7 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   double Tderivative;
 
   //main pid loop
-  while(error > 0.1) {
+  while(abs(error) > 0.1) {
 
     double avgpos = (
       rightMotorA.position(rotationUnits) +
@@ -207,9 +210,20 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
     if(abs(Terror) > 1) {
       Tintegral = 0;
     }
+
+    //disable turning
+    if(abs(Terror) < 0.2) {
+      Tintegral = 0;
+    }
     
     speed = Kp*error + Ki*integral + Kd*derivative;
-    turn = TKp*Terror + TKi*integral + Kd*Tderivative;
+    turn = TKp*Terror + TKi*Tintegral + Kd*Tderivative;
+
+    //yeah fuck it im just gonna clamp it
+    //no clever solution today
+    if(speed > maxspeed) {
+      speed = maxspeed;
+    }
     
     //gotta use pid 2 electric boogaloo
     if(avgpos < target) {
@@ -223,7 +237,11 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
       //TODO
       //think about how the robot moves in reverse and make this work with turn pid
       //mind too jello to think
-      Drivetrain.drive(reverse, speed, velocityUnits::pct);
+      leftMotorA.spin(reverse, speed + turn, velocityUnits::pct);
+      leftMotorB.spin(reverse, speed + turn, velocityUnits::pct);
+
+      rightMotorA.spin(reverse, speed - turn, velocityUnits::pct);
+      rightMotorB.spin(reverse, speed - turn, velocityUnits::pct);
     }
 
     wait(20, timeUnits::msec);
@@ -231,7 +249,7 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
   Drivetrain.stop();
 }
 
-void Auton::drivePID(double target, vex::distanceUnits distance) {
+void Auton::drivePID(double target, vex::distanceUnits distance, vex::directionType direction, double maxspeed, vex::velocityUnits velocityUnits) {
   double amount;
   //convert distance to revolutions
   switch(distance){
@@ -245,7 +263,7 @@ void Auton::drivePID(double target, vex::distanceUnits distance) {
     amount = target / (2 * M_PI * 38.1);
     break;
   }
-  drivePID(amount, vex::rotationUnits::rev);
+  drivePID(amount, vex::rotationUnits::rev, direction, maxspeed, velocityUnits);
 }
 
 void Auton::driveForTime(double time, vex::directionType direction, vex::timeUnits timeUnits, double speed, vex::velocityUnits velocityUnits) {
