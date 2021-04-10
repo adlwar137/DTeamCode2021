@@ -2,6 +2,8 @@
 #include "autonomous.h"
 #include <cmath>
 
+//as for any pid functions i should probably take into account the amount of time per loop instead of assuming the loops are small enough to be treated as continuous time
+
 void Auton::turnToHeading(int target, int accuracy, int min, int max, int iterations) {
   for(int i = 0; i < iterations; i++) {
     double diff = 10000000; //big number
@@ -212,6 +214,7 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits) {
     turn = TKp*Terror + TKi*integral + Kd*Tderivative;
     
     //gotta use pid 2 electric boogaloo
+    //damn i really don't know what the fuck im doing
     if(avgpos < target) {
       //i hate the double pid solution so much
       leftMotorA.spin(forward, speed + turn, velocityUnits::pct);
