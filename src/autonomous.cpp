@@ -43,13 +43,12 @@ void Auton::turnToHeading(int target, int accuracy, int min, int max, int iterat
 
 void Auton::turnToHeadingPID(int target) {
   //TODO tune this
-  //STOP COPYING MY CODE LANDIN
   const double Kp = 0.29;
-  const double Ki = 0.06;
+  const double Ki = 0.07;
   //sensitive to noise BE CAREFUL
   //hopefully predictive enough to reduce the massive overshoots while maintaining decent speed
   //god help me
-  const double Kd = 0.05;
+  const double Kd = 0.1;
 
   int d;
   int speed;
@@ -67,11 +66,7 @@ void Auton::turnToHeadingPID(int target) {
     
     d = abs(target - heading) % 360;
     error = d > 180 ? 360 - d : d;
-    /*
-    Controller1.Screen.clearScreen();
-    Controller1.Screen.setCursor(1, 1);
-    Controller1.Screen.print(heading);
-    */
+
     integral = integral + error;
     derivative = error - previousError;
     previousError = error;
