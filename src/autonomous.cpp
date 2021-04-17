@@ -44,7 +44,7 @@ void Auton::turnToHeading(int target, int accuracy, int min, int max, int iterat
 void Auton::turnToHeadingPID(int target) {
   //TODO tune this
   const double Kp = 0.29;
-  const double Ki = 0.07;
+  const double Ki = 0.06;
   //sensitive to noise BE CAREFUL
   //hopefully predictive enough to reduce the massive overshoots while maintaining decent speed
   //god help me
@@ -209,6 +209,10 @@ void Auton::drivePID(double target, vex::rotationUnits rotationUnits, vex::direc
     
     speed = Kp*error + Ki*integral + Kd*derivative;
     turn = TKp*Terror + TKi*Tintegral + Kd*Tderivative;
+
+    Controller1.Screen.clearScreen();
+    Controller1.Screen.setCursor(1, 1);
+    Controller1.Screen.print(speed);
     
 
     //yeah fuck it im just gonna clamp it
