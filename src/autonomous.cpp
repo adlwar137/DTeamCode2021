@@ -1,317 +1,214 @@
-#include "vex.h"
 #include "autonomous.h"
-#include <cmath>
 
-void Auton::turnToHeading(int target, int accuracy, int min, int max, int iterations) {
-  for(int i = 0; i < iterations; i++) {
-    double diff = 10000000; //big number
-    int d; 
+void auton::skills::WIP() {
+    Drivetrain.setStopping(brakeType::brake);
 
-    double power = 0;
+  //task::sleep(3000);
 
-    while(diff > accuracy) {
-      
-      d = abs(target - Drivetrain.heading()) % 360;
-      diff = d > 180 ? 360 - d : d;
+  //driveFunc::drivePID(-48, vex::distanceUnits::in);
 
-      power = diff / 180 * max + min;
-
-      //clamp power
-      if(power > max) {
-        power = max;
-      }
-
-      if((target - Drivetrain.heading() >= 0 && target - Drivetrain.heading() <= 180) || (target - Drivetrain.heading() <=-180 && target - Drivetrain.heading() >= -360)) {
-        //if need to turn right
-        rightMotorA.spin(reverse, power, percentUnits::pct);
-        rightMotorB.spin(reverse, power, percentUnits::pct);
-        leftMotorA.spin(forward, power, percentUnits::pct);
-        leftMotorB.spin(forward, power, percentUnits::pct);
-      } else {
-        //if need to turn left
-        rightMotorA.spin(forward, power, percentUnits::pct);
-        rightMotorB.spin(forward, power, percentUnits::pct);
-        leftMotorA.spin(reverse, power, percentUnits::pct);
-        leftMotorB.spin(reverse, power, percentUnits::pct);
-        
-      }
-      wait(20, timeUnits::msec);
-    }
-    Drivetrain.stop();
-  }
-}
-
-void Auton::turnToHeadingPID(int target) {
-  //TODO tune this
-  const double Kp = 0.29;
-  const double Ki = 0.06;
-  //sensitive to noise BE CAREFUL
-  //hopefully predictive enough to reduce the massive overshoots while maintaining decent speed
-  //god help me
-  const double Kd = 0.1;
-
-  int d;
-  int speed;
-  double previousError;
-
-  double error = 361;
-  double integral;
-  double derivative;
-
-  //will be used later
-  //int time = vex::timer::system();
-
-  while(error > 1) {
-    double heading = Drivetrain.heading();
-    
-    d = abs(target - heading) % 360;
-    error = d > 180 ? 360 - d : d;
-
-    integral = integral + error;
-    derivative = error - previousError;
-    previousError = error;
-
-    if (error < 1) {
-      integral = 0;
-    }
-
-    //fix for the loop integrating while the error is massive causing huge overshoots
-    if (error > 5) {
-      integral = 0;
-    }
-    
-    speed = Kp*error + Ki*integral + Kd*derivative;
-
-    if((target - heading >= 0 && target - heading <= 180) || (target - heading <=-180 && target - heading >= -360)) {
-      //if need to turn right
-      rightMotorA.spin(reverse, speed, percentUnits::pct);
-      rightMotorB.spin(reverse, speed, percentUnits::pct);
-      leftMotorA.spin(forward, speed, percentUnits::pct);
-      leftMotorB.spin(forward, speed, percentUnits::pct);
-    } else {
-      //if need to turn left
-      rightMotorA.spin(forward, speed, percentUnits::pct);
-      rightMotorB.spin(forward, speed, percentUnits::pct);
-      leftMotorA.spin(reverse, speed, percentUnits::pct);
-      leftMotorB.spin(reverse, speed, percentUnits::pct);
-      
-    }
-    //will be used later
-    /*
-    if(error != previousError) {
-      time = vex::timer::system();
-      
-    }
-    */
-    wait(100, timeUnits::msec);
-  }
-  Drivetrain.stop();
-  //wait for a time then recalculate error to check for overshoot
-  wait(100, msec);
-  d = abs(target - Drivetrain.heading()) % 360;
-  error = d > 180 ? 360 - d : d;
-  //if overshoot then recurse otherwise return
-  if(error > 1) {
-    Auton::turnToHeadingPID(target);
-  } else {
-    return;
-  }
-}
-
-void Auton::turnByPID(int target) {
-  turnToHeadingPID(target + Drivetrain.heading());
-}
-
-void Auton::drivePID(double target, vex::rotationUnits rotationUnits, vex::directionType direction, double maxspeed, vex::velocityUnits velocityUnits) {
-  rightMotorA.resetPosition();
-  rightMotorB.resetPosition();
-  leftMotorA.resetPosition();
-  leftMotorB.resetPosition();
-
-  //maybe i should somehow make a function to do all the pid math
-  //it would really streamline this if i knew c++
+  //doesnt work ever
 
 
-  //TODO tune this
-  //Drive PID variables
-  const double Kp = 10; //was 10
-  const double Ki = 0.5; //was 0.5
-  const double Kd = 1; //was 1
-
-  int speed;
-  double previousError;
-
-  double error = 361;
-  double integral;
-  double derivative;
-
-
-  //turn pid variables for keeping it straight while turning
-  double startHeading = Drivetrain.heading();
+  //score first ball
+  driveFunc::rollerTrainForTime(0.5, forward, seconds, 100, vex::velocityUnits::pct);
+  //back up
+  driveFunc::rollerTrainOn();
+  driveFunc::intakeOn(reverse);
+  Drivetrain.driveFor(reverse, 4, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
+  driveFunc::intakeOff();
+  Drivetrain.driveFor(reverse, 2, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
+  driveFunc::rollerTrainOff();
+  //turn to ball
   
-  const double TKp = 0.5; //was 0.5
-  const double TKi = 0;
-  const double TKd = 0;
+  driveFunc::turnToHeadingPID(-85);
+  //pick up ball
 
-  double turn;
-  double TpreviousError;
-  int d;
+  driveFunc::intakeOn();
+  driveFunc::drivePID(49, vex::distanceUnits::in); //yeah i don't know why this changes so often
 
-  double Terror = 1;
-  double Tintegral;
-  double Tderivative;
+  //Drivetrain.driveFor(forward, 50, vex::distanceUnits::in, 35, vex::velocityUnits::pct);
+  //driveFunc::drivePID(56, distanceUnits::in);
+  //turn towards goal
+  driveFunc::turnToHeadingPID(315);
+  driveFunc::intakeOff();
 
-  //main pid loop
-  while(abs(error) > 0.1) {
+  //ram goal :)
+  driveFunc::driveForTime(2, forward, seconds, 25, velocityUnits::pct);
 
-    double avgpos = (
-      rightMotorA.position(rotationUnits) +
-      rightMotorB.position(rotationUnits) +
-      leftMotorA.position(rotationUnits) +
-      leftMotorB.position(rotationUnits)
-    ) / 4;
+  //score ball and descore blue ball
+  driveFunc::rollerTrainForTime(1.5, forward, seconds, 80);
+  //back up from goal
+  //start
+  driveFunc::intakeOn(reverse);
+  driveFunc::drivePID(-50, vex::distanceUnits::in);
+  driveFunc::intakeOff();
 
-    //calculate error for both drive and turn
-    error = target - avgpos;
-    double headingDiff = Drivetrain.heading() - startHeading;
+  wait(1, sec);
+
+  //here
+  //spit out blue ball and turn towards wall ball
+  //driveFunc::intakeForTime(1, reverse);
+  driveFunc::turnToHeadingPID(180);
+
+  driveFunc::intakeOn();
+
+  wait(1, sec);
+
+  driveFunc::drivePID(30, vex::distanceUnits::in);//bending space time. alright!
+
+  //Drivetrain.driveFor(forward, double distance, distanceUnits units)
+
+  driveFunc::turnToHeadingPID(-90);
+
+  driveFunc::drivePID(32, vex::distanceUnits::in, forward, 30, velocityUnits::pct);
+  
+  /*
+  driveFunc::driveForTime(1, forward, seconds, 10, velocityUnits::pct);
+  //score one ball
+  driveFunc::rollerTrainForTime(0.5, reverse);
+  driveFunc::rollerTrainForTime(0.4);
+  driveFunc::rollerTrainForTime(0.5, reverse);
+  driveFunc::intakeOff();
+  
+  //back up from goal
+  driveFunc::intakeOn(reverse);
+  Drivetrain.driveFor(reverse, 12, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
+  driveFunc::intakeOff();
+
+  //Turn in the general direction of the goal
+  
+  driveFunc::turnToHeadingPID(180);
+  
+  //drive towards goal
+  driveFunc::drivePID(46, vex::distanceUnits::in);
+  //Drivetrain.driveFor(forward, 48, vex::distanceUnits::in, 30, vex::velocityUnits::pct);
+  //turn towards goal
+  
+  driveFunc::turnToHeadingPID(-135);
+  
+  //ram goal :)
+
+  driveFunc::driveForTime(1.5, forward, seconds, 20, velocityUnits::pct);
+  //score ball
+  driveFunc::intakeOn();
+  driveFunc::rollerTrainForTime(0.3);
+  driveFunc::intakeOff();
+  driveFunc::rollerTrainForTime(1.2);
+  //back up
+  driveFunc::intakeOn(reverse);
+  driveFunc::drivePID(-56, vex::distanceUnits::in);
+  driveFunc::intakeOff();
+  //driveFunc::intakeForTime(1, reverse)
+
+  driveFunc::turnToHeadingPID(90);
+
+  driveFunc::intakeOn();
+  driveFunc::drivePID(24, vex::distanceUnits::in);
+  //Drivetrain.driveFor(forward, 28, vex::distanceUnits::in, 30, vex::velocityUnits::pct);
+
+  driveFunc::turnToHeadingPID(180);
+  driveFunc::intakeOff();
+
+  //driveFunc::intakeOn();
+  driveFunc::driveForTime(1.5, forward, seconds, 15, velocityUnits::pct);
+  driveFunc::rollerTrainOn();
+  driveFunc::driveForTime(0.5, forward, seconds, 15, velocityUnits::pct);
+  //driveFunc::rollerTrainOff();
+  driveFunc::intakeOff();
+
+  //copy of first stuff
 
 
-    //drive pid math
-    integral = integral + error;
-    derivative = error - previousError;
-    previousError = error;
-    //turn pid math
-    Tintegral = Tintegral + Terror;
-    Tderivative = Terror - TpreviousError;
-    TpreviousError = Terror;
+  //score first ball
+  driveFunc::rollerTrainForTime(1, forward, seconds, 100, vex::velocityUnits::pct);
+  //back up
+  Drivetrain.driveFor(reverse, 6, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
+  //turn to ball
+  driveFunc::turnToHeadingPID(90); //should be 90 but jack said change to 85 // best descision to change this ever thank you jack
+  //pick up ball
 
-    //not sure this does anything important
-    /*
-    if (error < 0.1 || avgpos < target) {
-      integral = 0;
-    }
-    */
+  driveFunc::intakeOn();
+  driveFunc::drivePID(54, vex::distanceUnits::in);
+  //turn towards goal
+  driveFunc::turnToHeadingPID(135);
+  driveFunc::intakeOff();
 
-    //anti windup drive
-    if (abs(error) > 1) {
-      integral = 0;
-    }
+  //ram goal :)
+  driveFunc::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
+  //score ball and descore blue ball
+  driveFunc::intakeOn();
+  driveFunc::rollerTrainForTime(0.3);
+  driveFunc::intakeOff();
+  driveFunc::rollerTrainForTime(1.7);
+  //back up from goal
+  Drivetrain.driveFor(reverse, 56, vex::distanceUnits::in, 20, vex::velocityUnits::pct);  //back up from second goal
 
-    //anti windup turn
-    if(abs(Terror) > 1) {
-      Tintegral = 0;
-    }
+  driveFunc::turnToHeadingPID(0);
 
-    //disable turning
-    if(abs(Terror) < 0.2) {
-      Tintegral = 0;
-    }
-    
-    speed = Kp*error + Ki*integral + Kd*derivative;
-    turn = TKp*Terror + TKi*Tintegral + Kd*Tderivative;
+  driveFunc::intakeOn();
+  driveFunc::drivePID(20, vex::distanceUnits::in);
+  driveFunc::intakeOff();
 
-    Controller1.Screen.clearScreen();
-    Controller1.Screen.setCursor(1, 1);
-    Controller1.Screen.print(speed);
-    
+  driveFunc::turnToHeadingPID(-90);
 
-    //yeah fuck it im just gonna clamp it
-    //no clever solution today
-    if(speed > maxspeed) {
-      speed = maxspeed;
-    }
+  driveFunc::intakeOn(reverse);
+  driveFunc::driveForTime(1);
+  driveFunc::intakeOff();
 
-
-    
-    //gotta use pid 2 electric boogaloo
-    if(avgpos < target) {
-      //i hate the double pid solution so much
-      leftMotorA.spin(forward, speed + turn, velocityUnits::pct);
-      leftMotorB.spin(forward, speed + turn, velocityUnits::pct);
-
-      rightMotorA.spin(forward, speed - turn, velocityUnits::pct);
-      rightMotorB.spin(forward, speed - turn, velocityUnits::pct);
-    } else {
-      //TODO
-      //think about how the robot moves in reverse and make this work with turn pid
-      //mind too jello to think
-      leftMotorA.spin(forward, speed + turn, velocityUnits::pct);
-      leftMotorB.spin(forward, speed + turn, velocityUnits::pct);
-
-      rightMotorA.spin(forward, speed - turn, velocityUnits::pct);
-      rightMotorB.spin(forward, speed - turn, velocityUnits::pct);
-    }
-    
-    wait(20, timeUnits::msec);
-  }
-  Drivetrain.stop();
+  driveFunc::rollerTrainForTime(2);
+  */
 }
 
-void Auton::drivePID(double target, vex::distanceUnits distance, vex::directionType direction, double maxspeed, vex::velocityUnits velocityUnits) {
-  double amount;
-  //convert distance to revolutions
-  switch(distance){
-    case vex::distanceUnits::cm:
-    amount = target / (2 * M_PI * 3.81);
-    break;
-    case vex::distanceUnits::in:
-    amount = target / (2 * M_PI * 1.625);
-    break;
-    case vex::distanceUnits::mm:
-    amount = target / (2 * M_PI * 38.1);
-    break;
-  }
-  drivePID(amount, vex::rotationUnits::rev, direction, maxspeed, velocityUnits);
+//garbage
+void auton::match::center() {
+  driveFunc::intakeOn();
+  driveFunc::rollerTrainOn();
+  driveFunc::driveForTime(3);
+  driveFunc::rollerTrainOff();
+  driveFunc::intakeOff();
 }
 
-void Auton::driveForTime(double time, vex::directionType direction, vex::timeUnits timeUnits, double speed, vex::velocityUnits velocityUnits) {
-  Drivetrain.drive(direction, speed, velocityUnits);
-  wait(time, timeUnits);
-  Drivetrain.stop();
+void auton::match::corner() {
+  driveFunc::intakeOn();
+  driveFunc::driveForTime(1, forward, seconds, 50, velocityUnits::pct);
+  driveFunc::intakeOff();
+  driveFunc::rollerTrainForTime(2);
+  driveFunc::intakeOn(reverse);
+  driveFunc::driveForTime(0.5, reverse, seconds, 50, velocityUnits::pct);
+  driveFunc::intakeOff();
 }
 
-void Auton::setAllBrake(vex::brakeType brakeType) {
-  rightMotorA.setBrake(brakeType);
-  rightMotorB.setBrake(brakeType);
-  leftMotorA.setBrake(brakeType);
-  leftMotorB.setBrake(brakeType);
+//sort of working
+void auton::match::right() {
+  driveFunc::rollerTrainOn();
+  driveFunc::driveForTime(0.5, fwd, seconds, 20, velocityUnits::pct);
+  driveFunc::rollerTrainOff();
+  Drivetrain.driveFor(reverse, 10, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
+  driveFunc::turnToHeadingPID(270);
+  Drivetrain.driveFor(forward, 54, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
+  driveFunc::turnToHeadingPID(315);
+  driveFunc::intakeOn();
+  driveFunc::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
+  driveFunc::intakeOff();
+  driveFunc::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
+  driveFunc::rollerTrainForTime(2);
+  driveFunc::intakeOn(reverse);
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::in, 30, vex::velocityUnits::pct);
 }
 
-void Auton::rollerTrainOn(vex::directionType direction, double speed, vex::velocityUnits velocityUnits) {
-  TrainT.spin(direction, speed, velocityUnits);
-  TrainB.spin(direction, speed, velocityUnits);
-}
-
-void Auton::rollerTrainOff() {
-  TrainT.stop();
-  TrainB.stop();
-}
-
-void Auton::rollerTrain(double distance, vex::directionType direction, vex::rotationUnits rotationUnits, double speed, vex::velocityUnits velocityUnits) {
-  TrainT.startRotateFor(direction, distance, rotationUnits, speed, velocityUnits);
-  TrainB.rotateFor(direction, distance, rotationUnits, speed, velocityUnits);
-}
-
-void Auton::rollerTrainForTime(double time, vex::directionType direction, vex::timeUnits timeUnits, double speed, vex::velocityUnits velocityUnits) {
-  TrainT.spin(direction, speed, velocityUnits);
-  TrainB.spinFor(direction, time, timeUnits, speed, velocityUnits);
-  TrainT.stop();
-  TrainB.stop();
-}
-
-void Auton::intakeOn(vex::directionType direction, double speed, vex::velocityUnits velocityUnits) {
-  IntakeL.spin(direction, speed, velocityUnits);
-  IntakeR.spin(direction, speed, velocityUnits);
-}
-
-void Auton::intakeOff() {
-  IntakeL.stop();
-  IntakeR.stop();
-}
-
-void Auton::intakeForTime(double time, vex::directionType direction, vex::timeUnits timeUnits, double speed, vex::velocityUnits velocityUnits) {
-  IntakeL.spin(direction, speed, velocityUnits);
-  IntakeR.spinFor(direction, time, timeUnits, speed, velocityUnits);
-  IntakeL.stop();
-  IntakeR.stop();
+//not updated whatsoever
+void auton::match::left() {
+  driveFunc::rollerTrainForTime(2, forward, seconds, 80, vex::velocityUnits::pct);
+  Drivetrain.driveFor(reverse, 18, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
+  driveFunc::turnToHeadingPID(90);
+  Drivetrain.driveFor(forward, 39, vex::distanceUnits::cm, 15, vex::velocityUnits::pct);
+  driveFunc::turnToHeadingPID(45);
+  driveFunc::intakeOn();
+  driveFunc::driveForTime(2, forward, seconds, 20, velocityUnits::pct);
+  driveFunc::intakeOff();
+  driveFunc::rollerTrainForTime(2);
+  driveFunc::intakeOn(reverse);
+  Drivetrain.driveFor(reverse, 20, vex::distanceUnits::cm, 30, vex::velocityUnits::pct);
+  driveFunc::intakeOff();
 }

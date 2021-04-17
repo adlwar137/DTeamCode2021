@@ -1,3 +1,5 @@
+#include "vex.h"
+
 namespace driveFunc { 
 
     //Wierd P loop amalgamation if the functions below this one work then don't use this one
@@ -10,10 +12,10 @@ namespace driveFunc {
     void turnByPID(int target);
 
     //drive rotationUnits
-    void drivePID(double target, vex::rotationUnits rotationUnits);
+    void drivePID(double target, vex::rotationUnits rotationUnits, vex::directionType direction = vex::directionType::fwd, double maxspeed = 100, vex::velocityUnits velocityUnits = vex::velocityUnits::pct);
 
     //drive distanceUnits
-    void drivePID(double target, vex::distanceUnits distance);
+    void drivePID(double target, vex::distanceUnits distance, vex::directionType direction = vex::directionType::fwd, double maxspeed = 100, vex::velocityUnits velocityUnits = vex::velocityUnits::pct);
 
     //my own drivetrain code for driving for a time because there's none currently (overrides below)
     void driveForTime(double time, vex::directionType direction = vex::directionType::fwd, vex::timeUnits timeUnits = vex::timeUnits::sec, double speed = 100, vex::velocityUnits velocityUnits = vex::velocityUnits::pct);
