@@ -530,21 +530,15 @@ void usercontrol(void) {
     double avgMotorHeat = (leftMotorA.temperature() + leftMotorB.temperature() + rightMotorA.temperature() + rightMotorB.temperature()) / 4;
 
     //motor heat readings
+    /*
     Controller1.Screen.clearScreen();
     Controller1.Screen.setCursor(1, 1);
     Controller1.Screen.print(avgMotorHeat);
-    
-    if (tank == true) {
-      leftMotorA.spin(forward, Controller1.Axis3.value(), pct);
-      leftMotorB.spin(forward, Controller1.Axis3.value(), pct);
-      rightMotorA.spin(forward, Controller1.Axis2.value(), pct);
-      rightMotorB.spin(forward, Controller1.Axis2.value(), pct);
-    } else {
-      leftMotorA.spin(forward, (Controller1.Axis3.value() + Controller1.Axis1.value()), pct);
-      leftMotorB.spin(forward, (Controller1.Axis3.value() + Controller1.Axis1.value()), pct);
-      rightMotorA.spin(forward, (Controller1.Axis3.value() - Controller1.Axis1.value()), pct);
-      rightMotorB.spin(forward, (Controller1.Axis3.value() - Controller1.Axis1.value()), pct);
-    }
+    */
+    leftMotorA.spin(forward, Controller1.Axis3.value(), pct);
+    leftMotorB.spin(forward, Controller1.Axis3.value(), pct);
+    rightMotorA.spin(forward, Controller1.Axis2.value(), pct);
+    rightMotorB.spin(forward, Controller1.Axis2.value(), pct);
     //Intake
     if(Controller1.ButtonR1.pressing()) {
       IntakeR.spin(forward, 100, pct);
