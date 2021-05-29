@@ -1,5 +1,50 @@
 #include "autonomous.h"
 
+void auton::match::twoTowerRight() {
+  Drivetrain.setStopping(brakeType::brake);
+
+  driveFunc::intakeOn();
+  Drivetrain.drive(fwd,10,velocityUnits::pct);
+  driveFunc::rollerTrainForTime(1.2);
+  driveFunc::intakeOff();
+  driveFunc::rollerTrainForTime(0.1);
+  Drivetrain.stop();
+
+  driveFunc::intakeOn(reverse);
+  Drivetrain.driveFor(reverse, 10, distanceUnits::in);
+  driveFunc::intakeOff();
+
+  driveFunc::rollerTrainForTime(0.3,reverse);
+
+  driveFunc::turnToHeadingPID(90);
+  
+  driveFunc::intakeOn(reverse);
+  driveFunc::rollerTrainForTime(1);
+  driveFunc::intakeOff();
+
+  driveFunc::turnToHeadingPID(-90);
+  driveFunc::drivePID(48, vex::distanceUnits::in);
+
+  driveFunc::turnToHeadingPID(-45);
+
+  driveFunc::intakeOn();
+  Drivetrain.driveFor(fwd, 20, distanceUnits::in, 50, velocityUnits::pct);
+  //Drivetrain.drive(fwd,10,velocityUnits::pct);
+  driveFunc::rollerTrainForTime(1.1, forward, seconds, 30);
+  driveFunc::intakeOff();
+  driveFunc::rollerTrainForTime(0.3,fwd,seconds,50,velocityUnits::pct);
+  Drivetrain.stop();
+
+  driveFunc::intakeOn(reverse);
+  Drivetrain.driveFor(reverse, 10, distanceUnits::in);
+  driveFunc::intakeOff();
+
+}
+
+void auton::match::twoTowerLeft() {
+
+}
+
 void auton::skills::WIP() {
     Drivetrain.setStopping(brakeType::brake);
 

@@ -14,6 +14,10 @@ namespace auton {
     void right();
 
     void left();
+
+    void twoTowerRight();
+
+    void twoTowerLeft();
   }
 }
 
