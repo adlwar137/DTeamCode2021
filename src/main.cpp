@@ -21,9 +21,11 @@
 
 #include "vex.h"
 #include "drawing.h"
+#include "3dgraphics.h"
 #include "autonomous.h"
 
 #include <map>
+#include <cmath>
 
 using namespace vex;
 
@@ -83,11 +85,39 @@ void LeftAuton() {
   delete Left;
   delete Right;
 }
-void Bluescreen() {
 
-}
-void Autononomousfunc() {
-  
+double pos[2] = {0,0};
+
+int gpsFunne() {
+  const double length = 0;
+
+  //just temporary until the base is done
+  double left = 0;
+  double right = 0;
+  double aux = 0;
+  while(true) {
+    double heading = Drivetrain.heading();
+
+    double lastPos[2] = {0,0};
+    double lastFwd = 0;
+    double lastStr = 0;
+
+    double fwd = (left + right) / 2;
+    double str = aux - (length * heading);
+
+    double deltaFwd = fwd = lastFwd;
+    double deltaStr = str = lastStr;
+    
+    pos[0] = lastPos[0] + (cos(heading) * deltaFwd) + (sin(heading) * -deltaStr);
+    pos[1] = lastPos[1] + (-sin(heading) * deltaFwd) + (cos(heading) * -deltaStr);
+    //reset 
+    lastPos[0] = lastPos[0];
+    lastPos[1] = lastPos[1];
+
+    lastFwd = fwd;
+    lastStr = str;
+  }
+  return 1;
 }
 
 void click() {
