@@ -42,9 +42,9 @@ void driveFunc::turnToHeading(int target, int accuracy, int min, int max, int it
   }
 }
 
-void driveFunc::turnToHeadingPID(int target) {
+void driveFunc::turnToHeadingPID(int target, bool visionAdjust, vex::vision::signature signature) {
   //TODO tune this
-  const double Kp = 0.29;
+  const double Kp = 0.3;
   const double Ki = 0.06;
   //sensitive to noise BE CAREFUL
   //hopefully predictive enough to reduce the massive overshoots while maintaining decent speed
@@ -107,15 +107,42 @@ void driveFunc::turnToHeadingPID(int target) {
     wait(100, timeUnits::msec);
   }
   Drivetrain.stop();
+
+
   //wait for a time then recalculate error to check for overshoot
   wait(100, msec);
   d = abs(target - Drivetrain.heading()) % 360;
   error = d > 180 ? 360 - d : d;
   //if overshoot then recurse otherwise return
   if(error > 1) {
-    driveFunc::turnToHeadingPID(target);
+    driveFunc::turnToHeadingPID(target, visionAdjust);
   } else {
     return;
+  }
+
+  if(visionAdjust){
+    const double Ki = 0.01;
+    const int MaxVisionWidth = 315;
+
+    double error = 2;
+    double previousError = 0;
+
+    while(error > 1) {
+
+      Vision17.takeSnapshot(signature);
+    
+      vex::vision::object GOAL = Vision17.largestObject;
+
+      error = GOAL.centerX - (MaxVisionWidth/2);
+
+      integral = error + previousError;
+
+      speed = integral*Ki;
+
+      previousError = error;
+
+      Drivetrain.turn(turnType::right, speed, velocityUnits::pct);
+    }
   }
 }
 

@@ -6,7 +6,7 @@ namespace driveFunc {
     void turnToHeading(int target, int accuracy, int min, int max, int interations);
 
     //turn using a pid loop (takes degrees based on absolute Heading)
-    void turnToHeadingPID(int target);
+    void turnToHeadingPID(int target, bool visionAdjust = false, vex::vision::signature signature = Vision17__R3D);
 
     //same thing as above but this one is relative to the current position (only use if you have to)
     void turnByPID(int target);
