@@ -62,15 +62,17 @@ void auton::skills::WIP() {
   driveFunc::intakeOn(reverse);
   Drivetrain.driveFor(reverse, 4, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
   driveFunc::intakeOff();
-  Drivetrain.driveFor(reverse, 2, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
+  Drivetrain.driveFor(reverse, 3, vex::distanceUnits::in, 10, vex::velocityUnits::pct);
   driveFunc::rollerTrainOff();
   //turn to ball
   
-  driveFunc::turnToHeadingPID(-85);
+  driveFunc::turnToHeadingPID(-90);
   //pick up ball
 
   driveFunc::intakeOn();
-  driveFunc::drivePID(49, vex::distanceUnits::in); //yeah i don't know why this changes so often
+  
+  driveFunc::drivePID(50, vex::distanceUnits::in, forward, 20, velocityUnits::pct); //yeah i don't know why this changes so often
+  //Drivetrain.driveFor(49, distanceUnits::in, );
 
   //Drivetrain.driveFor(forward, 50, vex::distanceUnits::in, 35, vex::velocityUnits::pct);
   //driveFunc::drivePID(56, distanceUnits::in);
@@ -79,14 +81,14 @@ void auton::skills::WIP() {
   driveFunc::intakeOff();
 
   //ram goal :)
-  driveFunc::driveForTime(2, forward, seconds, 25, velocityUnits::pct);
+  driveFunc::drivePID(20, vex::distanceUnits::in);
 
   //score ball and descore blue ball
   driveFunc::rollerTrainForTime(1.5, forward, seconds, 80);
   //back up from goal
   //start
   driveFunc::intakeOn(reverse);
-  driveFunc::drivePID(-50, vex::distanceUnits::in);
+  driveFunc::drivePID(-60, vex::distanceUnits::in);
   driveFunc::intakeOff();
 
   wait(1, sec);
@@ -100,7 +102,7 @@ void auton::skills::WIP() {
 
   wait(1, sec);
 
-  driveFunc::drivePID(30, vex::distanceUnits::in);//bending space time. alright!
+  driveFunc::drivePID(34, vex::distanceUnits::in);//bending space time. alright!
 
   //Drivetrain.driveFor(forward, double distance, distanceUnits units)
 
@@ -108,7 +110,7 @@ void auton::skills::WIP() {
 
   driveFunc::drivePID(32, vex::distanceUnits::in, forward, 30, velocityUnits::pct);
   
-  /*
+  
   driveFunc::driveForTime(1, forward, seconds, 10, velocityUnits::pct);
   //score one ball
   driveFunc::rollerTrainForTime(0.5, reverse);
@@ -120,7 +122,7 @@ void auton::skills::WIP() {
   driveFunc::intakeOn(reverse);
   Drivetrain.driveFor(reverse, 12, vex::distanceUnits::in, 15, vex::velocityUnits::pct);
   driveFunc::intakeOff();
-
+/*
   //Turn in the general direction of the goal
   
   driveFunc::turnToHeadingPID(180);
@@ -214,6 +216,106 @@ void auton::match::center() {
   driveFunc::intakeOff();
 }
 
+void auton::match::threeTowerRight() {
+  
+
+  driveFunc::rollerTrainForTime(1);
+
+  driveFunc::driveForTime(1.5, reverse, seconds, 30, velocityUnits::pct);
+
+  Drivetrain.driveFor(forward, 10, distanceUnits::in);
+
+  driveFunc::turnToHeadingPID(-51);
+
+  driveFunc::intakeOn();
+  driveFunc::drivePID(76, vex::distanceUnits::in);
+  driveFunc::intakeOff();
+
+  driveFunc::rollerTrainForTime(2);
+
+  Drivetrain.driveFor(reverse, 10, distanceUnits::in);
+
+}
+
+void auton::match::threeTowerLeft() {
+  Brain.Screen.print("Device initialization...");
+  Brain.Screen.setCursor(2, 1);
+  // calibrate the drivetrain gyro
+  wait(200, msec);
+  TurnGyroSmart.calibrate();
+  Brain.Screen.print("Calibrating Gyro for Drivetrain");
+  // wait for the gyro calibration process to finish
+  while (TurnGyroSmart.isCalibrating()) {
+    wait(25, msec);
+  }
+  // reset the screen now that the calibration is complete
+  Brain.Screen.clearScreen();
+  Brain.Screen.setCursor(1,1);
+  wait(50, msec);
+  Brain.Screen.clearScreen();
+
+  driveFunc::rollerTrainForTime(1);
+
+  driveFunc::driveForTime(1.5, reverse, seconds, 30, velocityUnits::pct);
+
+  Drivetrain.driveFor(forward, 5, distanceUnits::in);
+
+  driveFunc::turnToHeadingPID(58);
+
+  driveFunc::intakeOn();
+  driveFunc::drivePID(78, vex::distanceUnits::in);
+  driveFunc::intakeOff();
+
+  driveFunc::rollerTrainForTime(2);
+
+  Drivetrain.driveFor(reverse, 10, distanceUnits::in);
+
+}
+
+void auton::match::homeRow() {
+
+  driveFunc::drivePID(26, vex::distanceUnits::in);
+
+  driveFunc::turnToHeadingPID(135);
+
+  driveFunc::intakeOn();
+  driveFunc::driveForTime(1);
+  
+  Drivetrain.drive(forward, 20, velocityUnits::pct);
+  driveFunc::rollerTrainForTime(0.5, reverse);
+  driveFunc::rollerTrainForTime(0.8);
+  driveFunc::rollerTrainForTime(0.5, reverse);
+  Drivetrain.stop();
+
+  driveFunc::intakeOff();
+
+  Drivetrain.driveFor(reverse, 24, distanceUnits::in, 40, velocityUnits::pct);
+
+  driveFunc::turnToHeadingPID(-90);
+
+  driveFunc::drivePID(46, vex::distanceUnits::in);
+
+  driveFunc::turnToHeadingPID(180);
+
+  Drivetrain.drive(forward, 20, velocityUnits::pct);
+  driveFunc::intakeForTime(0.5);
+  driveFunc::rollerTrainForTime(1);
+  Drivetrain.stop();
+
+  Drivetrain.driveFor(reverse, 12, distanceUnits::in, 40, velocityUnits::pct);
+
+  driveFunc::turnToHeadingPID(-90);
+
+  driveFunc::drivePID(46, vex::distanceUnits::in);
+
+  driveFunc::turnToHeadingPID(-135);
+
+  Drivetrain.drive(forward, 20, velocityUnits::pct);
+  driveFunc::intakeForTime(0.5);
+  driveFunc::rollerTrainForTime(1);
+  Drivetrain.stop();
+}
+
 void auton::match::corner() {
   driveFunc::intakeOn();
   driveFunc::driveForTime(1, forward, seconds, 50, velocityUnits::pct);
@@ -234,7 +336,7 @@ void auton::match::right() {
   Drivetrain.driveFor(forward, 54, vex::distanceUnits::in, 20, vex::velocityUnits::pct);
   driveFunc::turnToHeadingPID(315);
   driveFunc::intakeOn();
-  driveFunc::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
+  driveFunc::driveForTime(0.8, forward, seconds, 20, velocityUnits::pct);
   driveFunc::intakeOff();
   driveFunc::driveForTime(1, forward, seconds, 20, velocityUnits::pct);
   driveFunc::rollerTrainForTime(2);

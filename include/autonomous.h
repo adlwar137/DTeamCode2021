@@ -7,6 +7,12 @@ namespace auton {
   }
   
   namespace match {
+    void threeTowerRight();
+
+    void threeTowerLeft();
+
+    void homeRow();
+
     void center();
 
     void corner();
