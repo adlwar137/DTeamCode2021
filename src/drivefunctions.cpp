@@ -181,7 +181,7 @@ void driveFunc::drivePID(double target, vex::rotationUnits rotationUnits, vex::d
   const double TKi = 0;
   const double TKd = 0;
 
-  double turn;
+  double turn = 0;
   double TpreviousError;
   int d;
 
@@ -236,7 +236,7 @@ void driveFunc::drivePID(double target, vex::rotationUnits rotationUnits, vex::d
     }
     
     speed = Kp*error + Ki*integral + Kd*derivative;
-    turn = TKp*Terror + TKi*Tintegral + Kd*Tderivative;
+    //turn = TKp*Terror + TKi*Tintegral + Kd*Tderivative;
 
     Controller1.Screen.clearScreen();
     Controller1.Screen.setCursor(1, 1);
