@@ -9,8 +9,9 @@ brain  Brain;
 
 // VEXcode device constructors
 /*vex-vision-config:begin*/
-signature Vision17__BLU = signature (1, -3439, -2591, -3015, 9689, 14729, 12209, 3, 0);
-signature Vision17__R3D = signature (2, 4587, 7347, 5967, 1327, 3023, 2175, 3, 0);
+signature Vision17__R3D = signature (1, 4681, 6389, 5536, -1, 1629, 814, 4, 0);
+signature Vision17__BLU = signature (2, -3073, -1259, -2166, 8235, 15171, 11702, 1, 0);
+signature Vision17__GOAL = signature (3, -4627, -913, -2770, -4067, -409, -2238, 1.3, 0);
 vision Vision17 = vision (PORT16, 50, Vision17__BLU, Vision17__R3D);
 /*vex-vision-config:end*/
 controller Controller1 = controller(primary);
